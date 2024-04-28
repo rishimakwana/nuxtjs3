@@ -1,5 +1,6 @@
 {
     "common": {
+        "createOrder":"Create Order",
         "comingSoon":"Coming Soon",
         "captchaMSG":"Enable captcha to prevent fake order and duplicate order",
         "selectExisting":"Select from existing",

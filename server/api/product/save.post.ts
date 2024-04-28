@@ -20,7 +20,7 @@ export default defineEventHandler(async (event: any) => {
             });
           }
           const savedUser = await productModel.add(reqbody);
-          return { statusCode: 200, message : "Product savesd successfully." , ...savedUser.toJSON() };
+          return { statusCode: 200, message : "Product created successfully." , ...savedUser.toJSON() };
       } catch (error: any) {
         console.error("Error in API handler:", error);
   
