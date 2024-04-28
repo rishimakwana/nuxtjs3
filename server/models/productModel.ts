@@ -5,6 +5,14 @@ const connection: any = getConnection(1);
 const Product = connection.model("Product", productSchema);
 
 export default {
+  findOne: async (params: any, fields: any = null) => {
+    try {
+        return await Product.findOne(params, fields);
+    } catch (error) {
+        console.error("Error in findOne query:", error);
+        throw error;
+    }
+  },
   getSum: async (params: any, field: any) => {
     try {
       return await Product.aggregate([
@@ -48,11 +56,9 @@ export default {
     }
   },
 
-  get: async (params: any, fields: any = null) => {
+  get: async () => {
     try {
-      return await Product.find(params, fields).sort(
-        params && params.sort ? params.sort : { createdAt: -1 }
-      );
+      return await Product.find();
     } catch (error) {
       console.error("Error in get query:", error);
       throw error;

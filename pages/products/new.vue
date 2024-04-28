@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import productInit from '~/constants/productInit';
 import formInit from '~/constants/formInit';
-import { config } from "~/config";
 const { t } = useI18n();
 
 definePageMeta({
@@ -9,7 +8,7 @@ definePageMeta({
   layout: false,
 })
 useHead({
-  title: `Reports | Nuxt App`,
+  title: `Create product | Nuxt App`,
 })
 const isOpen = ref(false)
 const bumpModal = ref(false)
@@ -103,12 +102,47 @@ const handelConfirm = () => {
 const handelAbort = () => {
   isOpen.value = false;
 }
-const handelStep = (step: string) => {
-  activeItem.value = step;
+const cancel = () => {
+  navigateTo('/products')
 }
+const save = async () => {
+  if(!payload.value.name){
+    return;
+  }
+  const data = {
+    name:payload.value.name,
+    price:payload.value.price,
+    priceCompare:payload.value.priceCompare,
+    costPerItem:payload.value.costPerItem,
+    formOption:payload.value.formOption,
+    images:payload.value.images,
+    url:payload.value.url,
+    category:payload.value.category,
+    category2:payload.value.category2,
+    category3:payload.value.category3,
+    status:payload.value.status,
+  }
+  console.log("data-------**************-",data);
+  const res = await $fetch('/api/product/save', {
+      method: 'post',
+      body: data
+  })
+  if(res.statusCode == 200){
+    navigateTo('/products')
+  }
+  console.log(res,"application-----------------------------");
+  
+  isOpen.value = false;
+}
+
 const automaticFillUrl = () => {
   if (!payload.value.url)
     payload.value.url = payload.value.name
+}
+const updatedPrice = (val:any) => {
+  payload.value.price = val
+  console.log(val,"------------------updatedPrice--");
+  
 }
 const increaseValue = (type: string, index: number) => {
   if (type == "RegularPrice") {
@@ -203,12 +237,6 @@ const addWhosaleData = () => {
 }
 const removeWhosale = (num: number) => {
   payload.value.whosaleData.splice(num, 1);
-  // for (let i in [0, 1, 2, 3, 4]) {
-  //   if (i >= num) {
-  //     payload.value.whosaleData[i] = { count: "", price: "", priceText: "" };
-  //   }
-  // }
-  // this.whosaleValidation();
 }
 </script>
 
@@ -219,86 +247,21 @@ const removeWhosale = (num: number) => {
         <img src="~/assets/images/formulir-logo-light.png" :class="`h-[20px] w-[150px] ml-3 cursor-pointer`" alt="Logo"
           @click="handelQuit" />
         <div>
-          <ol class="items-center w-full space-y-4 sm:flex sm:space-x-8 sm:space-y-0 rtl:space-x-reverse">
-            <li v-for="(item, index) in navItems" @click="handelStep(item)"
-              :class="`flex items-center ${item === activeItem ? 'text-white' : 'text-[#97A3DD]'} cursor-pointer space-x-2.5 rtl:space-x-reverse`">
-              <UIcon v-if="index > 0" name="i-heroicons-chevron-right-solid" class="bg-white mr-2" />
-              <span
-                :class="`flex items-center justify-center w-8 h-8 border ${item === activeItem ? 'border-white' : 'border-[#97A3DD]'} rounded-full shrink-0`">
-                {{ index + 1 }}
-              </span>
-              <span class="items-center flex gap-2">
-                <h3 class="font-sm leading-tight">{{ item }}</h3>
-              </span>
-            </li>
-          </ol>
         </div>
         <UIcon name="i-heroicons-x-mark-solid" class="mr-3 bg-white cursor-pointer" @click="handelQuit" />
       </div>
     </header>
 
     <section class="relative w-full max-w-screen-2xl m-auto mt-16 flex bg-blue-50">
-      <div class="w-[50%] min-h-full p-7 border-r border-[#bfcee0]">
+      <div class="w-full min-h-full p-7 border-r border-[#bfcee0]">
         <div class="section_title mt-0 mb-7 add-new-product__header-title"
           :class="payload.formOption == 'single' && !isNewProduct ? 'add-new-product__header-title--with-action' : ''">
           <div v-if="isNewProduct"
             class="text-2xl font-medium leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
             {{ $t("common.productshipping") }}
           </div>
-          <div v-else class="step-title product-title-shrink">
-            <!-- <template v-if="payload.name">
-                  <template v-if="truncatedText(payload.name, false)">
-                    <vs-tooltip>
-                      {{truncatedText(payload.name)}}
-                      <template #tooltip>
-                        {{payload.name}}
-                      </template>
-                    </vs-tooltip>
-                  </template>
-                  <template v-else>{{ payload.name }}</template>
-                </template> -->
-          </div>
-          <div v-if="payload.formOption == 'single' && !isNewProduct" class="more-action">
-            <b-dropdown id="dropdown-dropleft" class="pp-btn-dots pp-dropdown" dropleft variant="link"
-              toggle-class="text-decoration-none" no-caret>
-              <template #button-content>
-                <div class="pp-button-white--fill">
-                  <span>More Action</span>
-                  <img src="~/assets/img/icon/ic-arrow-dropdown.svg" />
-                </div>
-              </template>
-              <!-- <b-dropdown-item>
-                    <div @click="openFollowupModal">
-                      <img
-                        class="mr-1"
-                        :src="require('~/assets/icons/ic-checkout-white.svg')"
-                      />
-                      <span>{{ $t("common.FollowUpText") }}</span>
-                    </div>
-                  </b-dropdown-item>
-                  <b-dropdown-item>
-                    <div @click="() => (notificationsModal = true)">
-                      <img
-                        class="mr-1"
-                        :src="
-                          require('~/assets/icons/ic-notifications-white.svg')
-                        "
-                      />
-                      <span>{{ $t("common.Notifications") }}</span>
-                    </div>
-                  </b-dropdown-item> -->
-              <!-- <b-dropdown-item>
-                    <div @click="() => (deleteModal = true)">
-                      <img
-                        class="mr-1"
-                        :src="require('~/assets/icons/ic-delete-white.svg')"
-                      />
-                      <span>{{ $t("common.delete") }}</span>
-                    </div>
-                  </b-dropdown-item> -->
-            </b-dropdown>
-          </div>
         </div>
+
         <div class="add-new-product-step1__container">
           <div class="add-new-product-step1__section-group">
             <!-- FORM OPTION SINGLE OR MULTIPLE FORMS -->
@@ -360,16 +323,20 @@ const removeWhosale = (num: number) => {
                       {{ $t("common.ProductName") }} &ensp;
                       <span class="text-xs text-gray-400 dark:text-white"> {{ $t("common.willAppear") }}</span>
                     </label>
-                    <div class="flex mt-1 border border-gray-300 dark:border-gray-700 rounded-lg">
-                      <UInput type="text" size="md" class="text-sm block w-full" variant="none" v-model="payload.name"
-                        v-on:blur="automaticFillUrl()" :placeholder="$t('common.enterProductName')" />
+                    <div class="">
+                        <UFormGroup :error="!payload.name && 'You must enter a name'">
+                          <template #default="{ error }">
+                            <UInput v-model="payload.name" type="text" v-on:blur="automaticFillUrl()" :placeholder="$t('common.enterProductName')" />
+                          </template>
+
+                          <template #error="{ error }">
+                            <span :class="[error ? 'text-red-500 dark:text-red-400' : 'text-primary-500 dark:text-primary-400']">
+                              {{ error ? error : 'Your name is valid' }}
+                            </span>
+                          </template>
+                        </UFormGroup>
+
                     </div>
-                    <!-- {{
-                        $t("common.name") +
-                        " " +
-                        $t("validation.required")
-                        $t("validation.namelength")
-                      }} -->
                   </div>
 
                   <!-- URL -->
@@ -438,7 +405,7 @@ const removeWhosale = (num: number) => {
                     <div class="col-span-1">
                       <InputPrice v-model:value="payload.price" :label="$t('common.regularPrice')" placeholder="0"
                         :increaseValue="increaseValue" :decreaseValue="decreaseValue" type="RegularPrice"
-                        :iconText="true" />
+                        :iconText="true" @updatedPriceData="updatedPrice" />
                     </div>
                     <div class="col-span-1">
                       <InputPrice v-model:value="payload.priceCompare" :label="$t('common.salePrice')" placeholder="0"
@@ -448,7 +415,7 @@ const removeWhosale = (num: number) => {
                       <InputPrice v-model:value="payload.costPerItem" :label="$t('common.costPerItem')" placeholder="0"
                         :icon="true" :tooltipText="$t('hint.wontSee')" type="CostPerItem" :increaseValue="increaseValue"
                         :decreaseValue="decreaseValue" :iconText="true" />
-                    </div>
+                    </div>f
                     <!-- Wholse sale price -->
                     <div class="flex items-center text-primary dark:text-white col-span-2"
                       v-if="payload.whosale == false">
@@ -530,649 +497,15 @@ const removeWhosale = (num: number) => {
                       <div class="w-full">
                         <InputPrice v-model:value="payload.available" :label="$t('common.stockQuantity')" placeholder="0"
                           :increaseValue="increaseValue" :decreaseValue="decreaseValue" type="StockQty" />
-                        <!-- <div
-                        v-if="
-                          submitted &&
-                          $v.payload.available &&
-                          !$v.payload.available.stockQuantityValidator
-                        "
-                        class="invalid-feedback-custom"
-                      >
-                        {{ $t("Please enter a valid integer number") }}
-                      </div> -->
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-
-              <!-- PRODUCT OPTIONS -->
-              <div id="add-new-product-step1__product-options" class="card section_card p-4 bg-white rounded-md">
-                <div class="card-body">
-                  <div
-                    class="add-new-product-step1__product-options__header flex justify-between border-b border-blue-100 mb-4 pb-4">
-                    <div class="flex items-center gap-4 ">
-                      <img src="~/assets/img/icon/product-option.svg" />
-                      <p class="text-[#203551] font-medium text-md">{{ $t("common.productOptions") }}</p>
-                    </div>
-                    <div class="text-sm font-medium text-gray-900 dark:text-white flex items-center gap-2">
-                      <div class="enable-option-title">
-                        {{ isProductOptionsEnable }}
-                        <span>{{ $t("common.productOptions") }}</span>
-                      </div>
-                      <div class="align-items-center">
-                        <UToggle size="md" v-model="enableProductOptions" />
-                      </div>
-                    </div>
-                  </div>
-                  <div class="add-new-product-step1__product-options__content" v-if="enableProductOptions">
-                    <div class="title-font sub-title2 hallow product-option-hallow">
-                      <div class="flex justify-between align-items-center">
-                        <div class="flex flex-wrap gap-4 text-sm font-medium text-gray-900 dark:text-white">
-                          <UCheckbox v-model="payload.multiplyVariations" name="multiplyVariations"
-                            :label="$t('text.enablemultiplevariations')"
-                            :disabled="payload.variablePrices.length === 0 ? true : false" />
-                          <UCheckbox v-model="payload.cartOrder" name="cartOrder" :label="$t('text.cartOrder')"
-                            :disabled="payload.multiplyVariations ? false : true" />
-                          <UCheckbox v-model="payload.addQuantity" name="addQuantity" :label="$t('text.addQuantity')" />
-                        </div>
-
-                        <UPopover :popper="{ placement: 'right', offsetDistance: 10 }">
-                          <img src="~/assets/img/icon/info-question.svg" alt="" />
-
-                          <template #panel>
-                            <div class="max-w-sm bg-blue-600">
-                              <!-- <div class="flex justify-end p-3 border-b border-custom-100">
-                                      <span class="cursor-pointer">
-                                        <img
-                                        src="~/assets/img/icon/close-white.svg"
-                                        alt=""/>
-                                      </span>
-                                    </div> -->
-                              <ul class="max-h-96 overflow-auto">
-                                <li>
-                                  <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                                    <img src="~/assets/img/icon/multi-order-info.svg" alt="">
-                                    <div class="ml-4">
-                                      <h4 class="font-[600] text-sm tracking-tight text-white mb-2">{{
-                                        $t("text.enablemultiplevariations") }}</h4>
-                                      <span class="font-[400] text-xs leading-5 tracking-tight text-slate-300">
-                                        {{ $t("text.multipleVariationsInfo") }}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                                    <img src="~/assets/img/icon/cart-info.svg" alt="">
-                                    <div class="ml-4">
-                                      <h4 class="font-[600] text-sm tracking-tight text-white mb-2">{{
-                                        $t("text.cartOrder") }}</h4>
-                                      <span class="font-[400] text-xs leading-5 tracking-tight text-slate-300">
-                                        {{ $t("text.cartOrderInfo") }}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </li>
-                                <li>
-                                  <div class="py-4 mx-4 flex items-start border-custom-100">
-                                    <img src="~/assets/img/icon/quantity-info.svg" alt="">
-                                    <div class="ml-4">
-                                      <h4 class="font-[600] text-sm tracking-tight text-white mb-2">{{
-                                        $t("text.addQuantity") }}</h4>
-                                      <span class="font-[400] text-xs leading-5 tracking-tight text-slate-300">
-                                        {{ $t("text.addQuantityInfo") }}
-                                      </span>
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          </template>
-                        </UPopover>
-                      </div>
-                      <div class="mt-5 flex gap-4 items-center">
-                        <UCheckbox v-model="payload.marketPlaceStyle" name="marketPlaceStyle"
-                          :label="$t('text.marketplaceStyle')" />
-                      </div>
-                    </div>
-                    <!-- <div class="product-attributes">
-                        <draggable
-                          v-model="newAttribute"
-                          group="newAttribute"
-                          @start="onStartDragP"
-                          @end="onEndDragP"
-                          style="cursor: -webkit-grab; cursor: grab"
-                        >
-                          <div :key="i" v-for="(attr, i) in newAttribute">
-                            <div v-if="attr.isSave && attr.value.length">
-                              <div
-                                style="
-                                  border-bottom: 1px solid #e5e8eb;
-                                  margin: 0px 0 20px 0;
-                                  padding-bottom: 20px;
-                                "
-                              >
-                                <div>
-                                  <div
-                                    class="flex"
-                                    :class="i != 0 ? 'justify-between' : ''"
-                                  >
-                                    <label class="title-font sub-title2">{{
-                                      attr.name
-                                    }}</label>
-                                    <div
-                                      v-if="attr.isMainVariation"
-                                      class="mb-10 ml-10 d-flex align-items-center fw-500 fs-14"
-                                      style="color: #203551"
-                                    >
-                                      <img
-                                        src="~/assets/img/icon/verify.svg"
-                                        class="mr-5px"
-                                      />
-                                      {{ $t("common.mainVariation") }}
-                                    </div>
-                                    <div
-                                      v-else
-                                      style="color: #2e47ba"
-                                      class="fs-13 fw-500 ml-10 pointer"
-                                      @click="makeMainVariation(i)"
-                                    >
-                                      {{ $t("common.makeMainVariation") }}
-                                    </div>
-                                  </div>
-                                  <div class="flex justify-between ukuran">
-                                    <div class="sixDots">
-                                      <img
-                                        src="~/assets/img/icon/sixDots.svg"
-                                      />
-                                    </div>
-                                    <div
-                                      class="flex justify-start align-items-center ukuran-flex"
-                                    >
-                                      <div
-                                        :key="index"
-                                        v-for="(elem, index) in attr.value"
-                                        class="product-options-value overflow-wrap--anywhere"
-                                      >
-                                        <div v-if="elem !== ''">{{ elem }}</div>
-                                      </div>
-                                    </div>
-                                    <div
-                                      class="edit-variation"
-                                      @click="editVar(attr)"
-                                    >
-                                      <img
-                                        src="~/assets/img/icon/edit-grey.svg"
-                                      />
-                                    </div>
-                                  </div>
-                                </div>
-                              </div>
-                            </div>
-                            <div v-else>
-                              <label
-                                class="title-font sub-title2 option-marign-left"
-                                style="margin-left: 25px"
-                              >
-                                {{ $t("common.optionName") }}
-                              </label>
-                              <ul
-                                style="
-                                  margin: 0;
-                                  list-style-type: none;
-                                  padding: 0;
-                                "
-                              >
-                                <li>
-                                  <div class="flex align-items-center">
-                                    <div>
-                                      <img
-                                        src="~/assets/img/icon/sixDots.svg"
-                                      />
-                                    </div>
-                                    <div
-                                      style="
-                                        max-width: 550px;
-                                        width: 100%;
-                                        margin: 0px 15px;
-                                        margin: 0px 15px;
-                                      "
-                                      class="max-width-option-values"
-                                    >
-                                      <div>
-                                        <b-dropdown
-                                          class="pp-dropdown pp-btn pp-btn-filter-dropdown product-status-dropdown product-category-dropdown"
-                                          id="variantDropdown"
-                                          toggle-class="text-decoration-none"
-                                          ref="variantDropdown"
-                                        >
-                                          <template #button-content>
-                                            <div
-                                              class="flex items-center w-100 align-items-center justify-content-between"
-                                            >
-                                              <input
-                                                v-model="newAttribute[i].name"
-                                                type="text"
-                                                placeholder="Input Or Select Attributes"
-                                                readonly
-                                                style="
-                                                  border: none;
-                                                  outline: none;
-                                                  padding: 0;
-                                                  margin: 0;
-                                                  font-size: 13px;
-                                                  font-weight: 400;
-                                                  line-height: 18px;
-                                                  letter-spacing: 0.02em;
-                                                  color: #6c7e95;
-                                                  text-transform: capitalize;
-                                                "
-                                              />
-
-                                              <i class="vs-icon-arrow"></i>
-                                            </div>
-                                          </template>
-                                          <div
-                                            class="d-flex gap-20px flex-column overflow-auto"
-                                          >
-                                          <vs-radio
-                                            v-for="(elem, ind) in VariationsPriceOptions"
-                                            v-bind:key="ind"
-                                            v-model="newAttribute[i].name"
-                                            :taggable="true"
-                                            :val="elem.value"
-                                          >
-                                            <div
-                                              v-if="
-                                                newAttribute[i].name !=
-                                                elem.value
-                                              "
-                                              class="d-flex align-items-center justify-content-between"
-                                              @click="closevariantdropdown()"
-                                            >
-                                              {{elem.name}}
-                                            </div>
-                                            <div
-                                              v-if="
-                                                newAttribute[i].name ==
-                                                elem.value
-                                              "
-                                              class="sip-active d-flex align-items-center justify-content-between"
-                                              @click="closevariantdropdown()"
-                                            >
-                                              {{elem.name}}
-                                              <img
-                                                src="~/assets/img/icon/checked-silver.svg"
-                                                alt=""
-                                              />
-                                            </div>
-                                          </vs-radio>
-                                            
-                                          </div>
-                                        </b-dropdown>
-                                      </div>
-                                    </div>
-                                    <div class="delete-attribute">
-                                      <img
-                                        class="pointer"
-                                        @click="removeAttr(i)"
-                                        src="~/assets/img/icon/Delete-grey.svg"
-                                      />
-                                    </div>
-                                  </div>
-                                  <div
-                                    style="
-                                      padding: 20px 0 0 0;
-                                      margin-left: 25px;
-                                    "
-                                    class="Product-Options"
-                                  >
-                                    <label class="title-font sub-title2">{{
-                                      $t("common.optionValues")
-                                    }}</label>
-                                  </div>
-                                  <ul
-                                    v-for="(val, k) in attr.value"
-                                    v-bind:key="k"
-                                    style="
-                                      margin: 0 0 15px;
-                                      list-style-type: none;
-                                      padding: 0 0 0 0px;
-                                    "
-                                  >
-                                    <li>
-                                      <div class="flex align-items-center">
-                                        <div>
-                                          <img
-                                            src="~/assets/img/icon/sixDots.svg"
-                                          />
-                                        </div>
-                                        <div
-                                          style="
-                                            max-width: 550px;
-                                            width: 100%;
-                                            margin: 0px 15px;
-                                          "
-                                          class="max-width-option-values"
-                                        >
-                                          <vs-input
-                                            :maxLength="100"
-                                            type="text"
-                                            class="vs-form-control attr-val-input"
-                                            :placeholder="
-                                              attr.name == 'Ukuran'
-                                                ? 'Medium'
-                                                : attr.name == 'Warna'
-                                                ? 'Hitam'
-                                                : attr.name == 'Material'
-                                                ? 'Karet'
-                                                : attr.name == 'Tipe'
-                                                ? 'Klasik'
-                                                : 'Input Option'
-                                            "
-                                            v-model="attr.value[k]"
-                                            :ref="'options' + k"
-                                            @change="
-                                              attr.value[
-                                                attr.value.length - 1
-                                              ] != ''
-                                                ? addMoreOption(i, k)
-                                                : ''
-                                            "
-                                          >
-                                          </vs-input>
-                                        </div>
-                                        <div v-if="k !== attr.value.length - 1">
-                                          <img
-                                            class="pointer"
-                                            @click="removeSubAttr(i, k)"
-                                            src="~/assets/img/icon/Delete-grey.svg"
-                                          />
-                                        </div>
-                                        <div
-                                          v-else
-                                          class="add-new-product-step1__product-options__option-values__delete"
-                                        ></div>
-                                      </div>
-                                    </li>
-                                  </ul>
-                                  <div class="parent-option-value-done-button">
-                                    <button
-                                      :disabled="
-                                        attr.name === '' || attr.value == ''
-                                      "
-                                      @click="saveAttributes(i)"
-                                      type="button"
-                                      class="pp-button-blue--border"
-                                    >
-                                      {{ $t("common.done") }}
-                                    </button>
-
-                                    <div
-                                      v-if="submitted && enableProductOptions && payload.attributes.length == 0" 
-                                      class="invalid-feedback-custom"
-                                    >
-                                      {{
-                                        $t("common.productOptions") +
-                                        " " +
-                                        $t("validation.required")
-                                      }}
-                                    </div>
-                                  </div>
-                                </li>
-                              </ul>
-                            </div>
-                          </div>
-                        </draggable>
-                        <div
-                          class="btn-st add-another-option-btn"
-                          @click="addNewAttributes()"
-                        >
-                          <img
-                            src="~/assets/img/icon/bluePlus.svg"
-                            style="width: 20px !important"
-                          />{{ $t("common.addOption") }}
-                        </div>
-                      </div> -->
-                  </div>
-
-                </div>
-              </div>
-
-              <!-- OTHERS BUMP -->
-              <div id="add-new-product-step1__others-bump" class="card section_card p-4 bg-white rounded-md">
-                <div class="card-body">
-                  <div class="card_wrapper">
-                    <div class="flex items-center gap-4 border-b border-blue-100 mb-4 pb-4">
-                      <img src="~/assets/img/icon/Others_block.svg" />
-                      <p class="text-[#203551] font-medium text-md">{{ $t("menu.others") }}</p>
-                    </div>
-                  </div>
-                  <div class="card_wrapper">
-                    <div class="w-100">
-                      <div class="input-label mb-2">
-                        <div class="font-bold">Bump</div>
-                      </div>
-                    </div>
-                    <div :class="`form-group pb-3 ${payload.isBump && 'border-b border-blue-100'}`">
-                      <div>
-                        <div class="flex items-center justify-between">
-                          <div class="flex items-center gap-3">
-                            <img src="~/assets/img/icon/bump-illus.svg" />
-                            <label class="text-sm font-medium text-gray-900 dark:text-white">
-                              {{ $t("common.isBump") }}
-                            </label>
-                            <UToggle size="md" v-model="payload.isBump" />
-                          </div>
-                        </div>
-                      </div>
-                    </div>
-                    <div v-if="payload.isBump">
-                      <div>
-                        <div v-if="payload.bumpArray.length >= 3">
-                          <div class="flex items-center">
-                            <img class="mr-10" :src="require('~/assets/img/icon/blue_info.svg')
-                              " />
-                            <span class="bump-warn-text">{{
-                              $t("text.maxBumpWarn")
-                            }}</span>
-                          </div>
-                        </div>
-                        <div v-else>
-                          <div
-                            class="addBump pt-3 pb-2 custom-disable flex items-center gap-3 text-sm font-medium text-primary dark:text-white cursor-pointer"
-                            @click="() => {
-                                  editBump = false;
-                                  bumpModal = true;
-                                }
-                                ">
-                            <span class="">
-                              <img style="width: 20px" src="~/assets/img/icon/bluePlus.svg" />
-                            </span>
-                            {{ $t("text.addBumpOrder") }}
-                          </div>
-                          <div class="pl-7 text-sm text-gray-500 dark:text-white">{{ $t("text.maxBump") }}</div>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-
-                  <!-- bump modal  -->
-                  <UModal v-model="bumpModal" prevent-close :overlay="false">
-                    <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-                      <template #header>
-                        <div class="flex items-center justify-between">
-                          <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                            Modal
-                          </h3>
-                          <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                            @click="bumpModal = false" />
-                        </div>
-                      </template>
-
-                      <Placeholder class="h-32" />
-                    </UCard>
-                  </UModal>
-
-                  
-                </div>
-              </div>
-
-              <!-- SECURITY -->
-              <div id="add-new-product-step1__others-bump" class="card section_card p-4 bg-white rounded-md">
-                <div class="card-body">
-                  <div class="card_wrapper">
-                    <div class="flex items-center gap-4 border-b border-blue-100 mb-4 pb-4">
-                      <img src="~/assets/img/icon/captcha-settings-icon.svg" />
-                      <p class="text-[#203551] font-medium text-md">{{ $t("common.security") }}</p>
-                    </div>
-                    <div :class="`flex items-center justify-between ${payload.isCaptchaEnable && 'border-b border-blue-100'}`">
-                      <div class="input-label mb-2">
-                        <div class="font-medium py-1">{{ $t("text.enableCaptcha") }}</div>
-                        <p class="text-gray-400 text-sm max-w-[420px]">{{ $t("text.showCaptchaMsg") }}</p>
-                      </div>
-                      <UToggle size="md" v-model="payload.isCaptchaEnable" />
-                    </div>
-                    <template v-if="payload.isCaptchaEnable">
-                    <div class="border-b border-blue-100 py-3">
-                      <div class="font-medium text-sm py-1">{{ $t("text.buildInCondition") }}</div>   
-                    <div class="flex items-center justify-between">
-                      <div class="input-label mb-2">
-                        <div class="font-medium text-sm py-1">{{ $t("text.showCaptchaMsg1") }}
-                          {{
-                            payload.captchaSettings.setting1.orderCount
-                          }}
-                          {{ $t("text.showCaptchaMsg2") }}
-                          {{ payload.captchaSettings.setting1.hours }}
-                          {{ $t("text.showCaptchaMsg3") }}</div>
-                        <p class="text-gray-400 text-sm max-w-[420px]">{{ $t("text.showCaptchaMsgSub1") }}</p>
-                      </div>
-                      <UToggle size="md" v-model="payload.captchaSettings.setting1.isEnable" />
-                    </div>
-                    <span class="text-primary text-sm max-w-[420px] cursor-pointer">{{ $t("common.settings") }}</span>
-                  </div>
-                  <div class="border-b border-blue-100 py-3">
-                    <div class="flex items-center justify-between">
-                      <div class="input-label text-sm mb-2">
-                        <div class="font-medium py-1">{{ $t("text.showCaptchaMsg1") }}
-                          {{
-                            payload.captchaSettings.setting2.orderCount
-                          }}
-                          {{ $t("text.showCaptchaMsg2") }}
-                          {{ payload.captchaSettings.setting2.hours }}
-                          {{ $t("text.showCaptchaMsg3") }}</div>
-                        <p class="text-gray-400 text-sm max-w-[420px]">{{ $t("text.showCaptchaMsgSub2") }}</p>
-                      </div>
-                      <UToggle size="md" v-model="payload.captchaSettings.setting2.isEnable" />
-                    </div>
-                    <span class="text-primary text-sm max-w-[420px] cursor-pointer">{{ $t("common.settings") }}</span>
-                  </div>
-                  <div class="border-b border-blue-100 py-3">
-                    <div class="flex items-center justify-between">
-                      <div class="input-label text-sm mb-2">
-                        <div class="font-medium py-1">{{ $t("text.showCaptchaMsg1") }}
-                          {{
-                            payload.captchaSettings.setting3.orderCount
-                          }}
-                          {{ $t("text.showCaptchaMsg2") }}
-                          {{ payload.captchaSettings.setting3.hours }}
-                          {{ $t("text.showCaptchaMsg3") }}</div>
-                        <p class="text-gray-400 text-sm max-w-[420px]">{{ $t("text.showCaptchaMsgSub3") }}</p>
-                      </div>
-                      <UToggle size="md" v-model="payload.captchaSettings.setting3.isEnable" />
-                    </div>
-                    <span class="text-primary text-sm max-w-[420px] cursor-pointer">{{ $t("common.settings") }}</span>
-                  </div>
-                  </template>    
-                  </div>
-                </div>
-              </div>
-
-              <!-- Assign Product To -->
-              <div id="add-new-product-step1__others-bump" class=" p-4 bg-white rounded-md">
-                    <div class="flex items-center gap-4 border-b border-blue-100 mb-4 pb-4">
-                      <img src="~/assets/img/icon/assignTo.svg" />
-                      <p class="text-[#203551] font-medium text-md">{{ $t("common.AssignProductto") }}</p>
-                    </div>
-                    <div> 
-                      <Placeholder class="h-48" />
-                      <!-- <assignation v-model="payload"  /> -->
-                    </div>
-              </div>
-
             </div>
           </div>
-
-
         </div>
       </div>
-      <div
-        class="p-7 overflow-y-auto left-[50%] right-0 fixed max-h-[calc(100%-65px)] w-[50%] max-w-[768px]">
-        <UTabs :items="items" class="w-full">
-          <template #default="{ item, index, selected }">
-            <div class="flex items-center gap-2 relative truncate">
-              <UIcon :name="item.icon" class="w-4 h-4 flex-shrink-0" />
-      
-              <span class="truncate"> {{ item.label }}</span>
-      
-              <span v-if="selected" class="absolute -right-4 w-2 h-2 rounded-full bg-primary-500 dark:bg-primary-400" />
-            </div>
-          </template>
-          <template #desktop="{ item }">
-            <UCard @submit.prevent="onSubmitAccount">
-              <template #header>
-                <p class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  {{ item.label }}
-                </p>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  Make changes to your account here. Click save when you're done.
-                </p>
-              </template>
-      
-              <UFormGroup label="Name" name="name" class="mb-3">
-                <UInput v-model="accountForm.name" />
-              </UFormGroup>
-              <UFormGroup label="Username" name="username">
-                <UInput v-model="accountForm.username" />
-              </UFormGroup>
-      
-              <template #footer>
-                <UButton type="submit" color="black">
-                  Save account
-                </UButton>
-              </template>
-            </UCard>
-          </template>
-      
-          <template #mobile="{ item }">
-            <UCard @submit.prevent="onSubmitPassword">
-              <template #header>
-                <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                  {{ item.label }}
-                </h3>
-                <p class="mt-1 text-sm text-gray-500 dark:text-gray-400">
-                  Change your password here. After saving, you'll be logged out.
-                </p>
-              </template>
-      
-              <UFormGroup label="Current Password" name="current" required class="mb-3">
-                <UInput v-model="passwordForm.currentPassword" type="password" required />
-              </UFormGroup>
-              <UFormGroup label="New Password" name="new" required>
-                <UInput v-model="passwordForm.newPassword" type="password" required />
-              </UFormGroup>
-      
-              <template #footer>
-                <UButton type="submit" color="black">
-                  Save password
-                </UButton>
-              </template>
-            </UCard>
-          </template>
-        </UTabs>
-      </div>
-
     </section>
     <UModal v-model="isOpen">
       <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800 text-center' }">
@@ -1188,6 +521,16 @@ const removeWhosale = (num: number) => {
         </div>
       </UCard>
     </UModal>
+
+    <!-- save and cancel button -->
+    <div class="w-full flex gap-6 justify-end px-4 pb-3 pt-5">
+          <UButton class="px-5 py-2 rounded-md" @click="cancel">
+            Cancel
+          </UButton>
+          <UButton class="px-5 py-2 rounded-md" @click="save">
+            Save
+          </UButton>
+    </div>
   </div>
 </template>
 

@@ -26,15 +26,6 @@ const summary = ref<any>([
   },
 ])
 
-// const { data: products } = await useFetch<[Product]>('api/product')
-async function addTodo() {
-  console.log('clicked==========');
-  const res = await $fetch('/api/product/getAll')
-  // const todo = await $fetch('/api/product')
-
-  console.log('todo====', res);
-}
-
 const date = ref(new Date())
 
 
@@ -56,10 +47,7 @@ const date = ref(new Date())
         </div>
       </div>
     </div>
-    <div>
-    </div>
     <PortletBase :data="summary" />
-    <button @click="addTodo()">Click to call api</button>
     <ProductListing />
   </UContainer>
 </template>

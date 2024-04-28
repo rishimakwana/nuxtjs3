@@ -2,13 +2,20 @@
 
 const props = defineProps(['value', 'label', 'placeholder', 'icon', 'tooltipText', 'type', 'increaseValue', 'decreaseValue', 'iconText', 'index'])
 const { increaseValue, decreaseValue } = props;
-// const emit = defineEmits();
+const emit = defineEmits();
 
-// watch(() => props.value.category, (val) => {
-//     let findMainCat = categories.find(one => one.text == val)
-//     if(findMainCat) catOptions2.value = findMainCat.sub
-//     emit('update:value.category2', '');
-// });
+import { ref } from 'vue';
+let priceValue = ref(props.value);
+
+
+// Emit the updated value on change
+const emitUpdatedPrice = (val: any) => {
+  emit('updatedPriceData', val);
+};
+
+watch(priceValue, (val) => {
+  emitUpdatedPrice(val);
+}, { immediate: true });
 
 </script>
 
@@ -32,8 +39,8 @@ const { increaseValue, decreaseValue } = props;
             dark:border-r-gray-700 border-r rounded-s-lg">
         Rp
       </div>
-      <UInput type="text" size="md" class="text-sm block w-full" variant="none" :placeholder="props.placeholder"
-        v-model="props.value" />
+      <UInput type="text" size="md" class="text-sm block w-full" variant="none"  :placeholder="props.placeholder"
+        v-model="priceValue" />
       <div class="h-auto py-[3px] px-3">
         <div class="flex items-center py-[5px] cursor-pointer"
           @click="props.index !== undefined && props.index !== null ? increaseValue(props.type, props.index) : increaseValue(props.type)">

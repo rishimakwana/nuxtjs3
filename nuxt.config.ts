@@ -1,65 +1,50 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import i18nConfig from './i18n.config'; // Import your i18n configuration file
 
 export default defineNuxtConfig({
   devtools: { enabled: false },
-  css: ['~/assets/app.css'],
+  css: ["~/assets/app.css"],
+  mode: 'spa',
   modules: [
-    '@nuxt/ui',
-    '@pinia/nuxt',
+    "@nuxt/ui",
+    "@pinia/nuxt",
     "nuxt-server-utils",
-    '@vee-validate/nuxt',
-    '@nuxtjs/i18n',
-    '@samk-dev/nuxt-vcalendar',
-    // '@nuxtjs/toast',
+    "@vee-validate/nuxt",
+    "@samk-dev/nuxt-vcalendar",
+    "@nuxtjs/i18n"
   ],
   veeValidate: {
     autoImports: true,
     componentNames: {
-      Form: 'VeeForm',
-      Field: 'VeeField',
-      FieldArray: 'VeeFieldArray',
-      ErrorMessage: 'VeeErrorMessage',
+      Form: "VeeForm",
+      Field: "VeeField",
+      FieldArray: "VeeFieldArray",
+      ErrorMessage: "VeeErrorMessage",
     },
   },
   i18n: {
-    vueI18n: i18nConfig
+    vueI18n: './i18n.config.ts' // if you are using custom path, default
   },
-  // toast: {
-  //   position: 'top-center',
-  //   register: [ // Register custom toasts
-  //     {
-  //       name: 'my-error',
-  //       message: 'Oops...Something went wrong',
-  //       options: {
-  //         type: 'error'
-  //       }
-  //     }
-  //   ]
-  // },
   vue: {
     defineModel: true,
-    propsDestructure: true
+    propsDestructure: true,
   },
   runtimeConfig: {
-    mongoUrls: [process.env.MONGODB_URI ?? "",
-    process.env.MONGODB_URI1 ?? "",
-    process.env.MONGODB_URI2 ?? "",
-    process.env.MONGODB_URI3 ?? "",
-    process.env.MONGODB_URI4 ?? "",
-    process.env.MONGODB_URI5 ?? "",
-    ]
+    mongoUrls: [
+      process.env.MONGODB_URI ?? "",
+      process.env.MONGODB_URI1 ?? "",
+      process.env.MONGODB_URI2 ?? "",
+      process.env.MONGODB_URI3 ?? "",
+      process.env.MONGODB_URI4 ?? "",
+      process.env.MONGODB_URI5 ?? "",
+    ],
   },
   nitro: {},
-  // imports: {
-  //   presets: [
-  //     {
-  //       from: 'vue-i18n',
-  //       imports: ['useI18n']
-  //     }
-  //   ]
-  // }
-  // colorMode: {
-  //   preference: 'light'
-  // }
-})
+  // Vite configuration
+  vite: {
+    server: {
+      hmr: {
+        overlay: false,
+      },
+    },
+  },
+});

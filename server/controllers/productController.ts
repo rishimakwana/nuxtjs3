@@ -1,29 +1,26 @@
 // Import the necessary modules
 import { readBody } from "h3";
-import Product from '../models/productModel';
-import parseError from '../utils/errorParser';
+import Product from "../models/productModel";
+import parseError from "../utils/errorParser";
 
 // Define the event handler
 export default {
-
   //get all produts
   getAll: async (event: any) => {
     try {
-      //   const reqbody = await readBody(event);
-      // const name = getRouterParam(event, 'name')
-    const query = "getQuery(event);"
-    if (typeof query !== 'object' || query === null) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: 'Invalid filter parameter',
-        stack: "Bad Request",
-      });
-    }
-    const result = await Product.get(query,query)
-    console.log('result=====',result);
-    return { result:result };
+      const query = "getQuery(event);";
+      if (typeof query !== "object" || query === null) {
+        throw createError({
+          statusCode: 400,
+          statusMessage: "Invalid filter parameter",
+          stack: "Bad Request",
+        });
+      }
+      const result = await Product.get();
+      console.log("result=====", result);
+      return { result: result };
     } catch (error) {
-    return parseError(error)
+      return parseError(error);
     }
   },
 

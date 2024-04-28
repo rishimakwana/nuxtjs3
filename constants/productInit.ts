@@ -10,8 +10,8 @@ export default  {
     category3: '',
     status: 'active',
     price: '0',
-    priceCompare: '',
-    costPerItem: '',
+    priceCompare: "0",
+    costPerItem: '0',
     chargeTax: false,
     enableSplitPrice: false,
     splitPriceData: [

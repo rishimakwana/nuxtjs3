@@ -1,7 +1,9 @@
 <script lang="ts" setup>
-// import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
 import { useAuthStore } from '~/store/auth'; // import the auth store we just created
 const props = defineProps(['toggleSidebar', 'sidebarExpanded']);
+
+console.log(props,"propspropsprops");
+
 const { toggleSidebar } = props;
 
 const router = useRouter();
@@ -66,14 +68,6 @@ const items = [
                     src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAxOSAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGVsbGlwc2UgY3g9IjkuNDAzMzciIGN5PSIxNS43OTE5IiByeD0iOC40MDMzNyIgcnk9IjMuODE5NzEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSI5LjQwMzA4IiBjeT0iMTQuMTMzNSIgcj0iMS44NTIzIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuMyIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE1LjkxNjkgMTAuNTc5NkwxNS40NTk3IDguNTczNDFDMTQuODE0MiA1Ljc0MDMzIDEyLjI5NDggMy43MzA0NyA5LjM4OTEyIDMuNzMwNDdWMy43MzA0N0M2LjQ5NjM5IDMuNzMwNDcgMy45ODQ3IDUuNzIyOCAzLjMyNjMyIDguNTM5NkwyLjEwNTQ3IDEzLjc2MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTAuNjk2IDMuODA3ODVDMTAuODM3NiAzLjU3NzMzIDEwLjkxOTIgMy4zMDYwMyAxMC45MTkyIDMuMDE1NjVDMTAuOTE5MiAyLjE3ODU4IDEwLjI0MDcgMS41IDkuNDAzNTkgMS41QzguNTY2NTIgMS41IDcuODg3OTQgMi4xNzg1OCA3Ljg4Nzk0IDMuMDE1NjVDNy44ODc5NCAzLjI3NzcyIDcuOTU0NDUgMy41MjQyNSA4LjA3MTUyIDMuNzM5MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4="
                     alt="icon noti">
                 </UChip>
-                <!-- <button type="button" class="w-[25px] h-[40px] relative inline-flex items-center text-sm font-medium text-center text-white bg-primary rounded-lg">
-                      <img
-                        src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAxOSAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGVsbGlwc2UgY3g9IjkuNDAzMzciIGN5PSIxNS43OTE5IiByeD0iOC40MDMzNyIgcnk9IjMuODE5NzEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSI5LjQwMzA4IiBjeT0iMTQuMTMzNSIgcj0iMS44NTIzIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuMyIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE1LjkxNjkgMTAuNTc5NkwxNS40NTk3IDguNTczNDFDMTQuODE0MiA1Ljc0MDMzIDEyLjI5NDggMy43MzA0NyA5LjM4OTEyIDMuNzMwNDdWMy43MzA0N0M2LjQ5NjM5IDMuNzMwNDcgMy45ODQ3IDUuNzIyOCAzLjMyNjMyIDguNTM5NkwyLjEwNTQ3IDEzLjc2MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTAuNjk2IDMuODA3ODVDMTAuODM3NiAzLjU3NzMzIDEwLjkxOTIgMy4zMDYwMyAxMC45MTkyIDMuMDE1NjVDMTAuOTE5MiAyLjE3ODU4IDEwLjI0MDcgMS41IDkuNDAzNTkgMS41QzguNTY2NTIgMS41IDcuODg3OTQgMi4xNzg1OCA3Ljg4Nzk0IDMuMDE1NjVDNy44ODc5NCAzLjI3NzcyIDcuOTU0NDUgMy41MjQyNSA4LjA3MTUyIDMuNzM5MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4="
-                        alt="icon noti">
-                      <span class="sr-only">Notifications</span>
-                        <div class="absolute inline-flex items-center min-w-[18px] justify-center h-5 p-0.5 max-w-fit text-xs font-bold text-white bg-red-500 border-2 border-white rounded-md -top-[5px] -end-2 dark:border-gray-900">224445</div>
-                      </button> -->
-
                 <template #panel>
                   <div class="max-w-sm">
                     <div class="flex justify-between p-4 border-b border-custom-100">
@@ -91,67 +85,6 @@ const items = [
                               noti.data.name ? noti.data.name : "" has ordered
                               noti.data.product_name , Order ID :
                               noti.data.ORDER_ID ? noti.data.ORDER_ID : ""
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      <li href="#">
-                        <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                          <img src="~/assets/img/icon/notif-new-order.svg" alt="">
-                          <div class="ml-4">
-                            <h4 class="font-[600] text-sm tracking-tight color-custom-800 mb-2">New Order</h4>
-                            <span class="font-[400] text-xs leading-5 tracking-tight text-custom">
-                              noti.data.name ? noti.data.name : "" has ordered 60000000
-                              noti.data.product_name , Order ID :
-                              noti.data.ORDER_ID ? noti.data.ORDER_ID : ""
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      <li href="#">
-                        <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                          <img src="~/assets/img/icon/notif-new-order.svg" alt="">
-                          <div class="ml-4">
-                            <h4 class="font-[600] text-sm tracking-tight color-custom-800 mb-2">New Order</h4>
-                            <span class="font-[400] text-xs leading-5 tracking-tight text-custom">
-                              noti.data.name ? noti.data.name : "" has ordered
-                              noti.data.product_name , Order ID :
-                              noti.data.ORDER_ID ? noti.data.ORDER_ID : ""
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      <li href="#">
-                        <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                          <img src="~/assets/img/icon/notif-new-order.svg" alt="">
-                          <div class="ml-4">
-                            <h4 class="font-[600] text-sm tracking-tight color-custom-800 mb-2">New Payment</h4>
-                            <span class="font-[400] text-xs leading-5 tracking-tight text-custom">
-                              usere has ordered testprod, Order ID : 2312045296041
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      <li href="#">
-                        <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                          <img src="~/assets/img/icon/notif-new-order.svg" alt="">
-                          <div class="ml-4">
-                            <h4 class="font-[600] text-sm tracking-tight color-custom-800 mb-2">New Payment</h4>
-                            <span class="font-[400] text-xs leading-5 tracking-tight text-custom">
-                              usere has ordered testprod, Order ID : 2312045296041 black===
-                            </span>
-                          </div>
-                        </div>
-                      </li>
-                      <li href="#">
-                        <div class="py-4 mx-4 flex items-start border-b border-custom-100">
-                          <img src="~/assets/img/icon/notif-new-order.svg" alt="">
-                          <div class="ml-4">
-                            <h4 class="font-[600] text-sm tracking-tight color-custom-800 mb-2">New Payment</h4>
-                            <span class="font-[400] text-xs leading-5 tracking-tight text-custom">
-                              New payment from noti.data.name ? noti.data.name : "" for orderId
-                              noti.data.ORDER_ID ? noti.data.ORDER_ID : "" for product
-                              noti.data.product_name ? noti.data.product_name : ""
                             </span>
                           </div>
                         </div>
@@ -202,10 +135,10 @@ const items = [
                         <img src="~/assets/img/icon/ic-arrow-white-bottom-18.svg" alt="" class="arrow">
 
                       </span>
-                      <!-- <span class="profile-icon ml-1 flex md:hidden">
+                      <span class="profile-icon ml-1 flex md:hidden">
                       <img src="~/assets/img/icon/profile-dropdown.svg" alt="">
                       <img src="~/assets/img/icon/ic-arrow-white-bottom-18.svg" alt="" class="arrow">
-                    </span> -->
+                    </span>
                     </div>
                   </button>
                 </UDropdown>

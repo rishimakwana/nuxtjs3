@@ -205,6 +205,6 @@ const { data: products, pending } = await useLazyAsyncData<{
 
           <!-- <Placeholder class="h-32" /> -->
         </UCard>
-      </UModal>
+    </UModal>
   </UCard>
 </template>
