@@ -14,7 +14,6 @@ const localFiles = ref<any>([])
 const emit  = defineEmits();
 
 const onChange = (e: any) => {
-    console.log('onChange====',e);
     const items = e.target.files;
     for (let i = 0; i < items.length; i++) {
         const item = items[i];
@@ -48,7 +47,6 @@ const generateURL = (file: any) => {
 }
 
 const drop = (e: any) => {
-    console.log('drop====',e);
     e.preventDefault();
     isDragging.value = false;
     const items = e.dataTransfer.items;

@@ -12,8 +12,6 @@ export default defineEventHandler(async (event: any) => {
     await userLoginSchema.validate(reqBody, { abortEarly: false });
 
     const result: any = await userModal.findOne({email :reqBody.email});
-    console.log("result===", result,result.password,"bcryptRes----------",reqBody.password);
-
     if (result && result.password) {
       const bcryptRes = await bcrypt.compare(reqBody.password, result.password);
       if (bcryptRes) {
@@ -45,8 +43,6 @@ export default defineEventHandler(async (event: any) => {
       });
     }
   } catch (error: any) {
-    console.error("Error in API handler:", error);
-
     if (error?.cause) {
       return error;
     } else if (error.errors) {

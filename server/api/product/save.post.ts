@@ -5,7 +5,6 @@ export default defineEventHandler(async (event: any) => {
         
         // Read the body of the request
         const reqbody = await readBody(event);
-        console.log(reqbody,'`-----------reqbody`');
         const exists = await productModel.findOne({
             name: reqbody.name,
           });
@@ -22,8 +21,6 @@ export default defineEventHandler(async (event: any) => {
           const savedUser = await productModel.add(reqbody);
           return { statusCode: 200, message : "Product created successfully." , ...savedUser.toJSON() };
       } catch (error: any) {
-        console.error("Error in API handler:", error);
-  
         if (error?.cause) {
           return error;
         } else if (error.errors) {

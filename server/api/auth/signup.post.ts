@@ -41,8 +41,6 @@ export default defineEventHandler(async (event: any) => {
     const savedUser = await userModal.add(params);
     return { statusCode: 200, message:"Successfully registered", body: JSON.stringify({ savedUser }) };
   } catch (error: any) {
-    console.error("Error in API handler:", error);
-
     if (error?.cause) {
       return error;
     } else if (error.errors) {

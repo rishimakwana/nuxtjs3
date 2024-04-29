@@ -2,8 +2,6 @@
 import { useAuthStore } from '~/store/auth'; // import the auth store we just created
 const props = defineProps(['toggleSidebar', 'sidebarExpanded']);
 
-console.log(props,"propspropsprops");
-
 const { toggleSidebar } = props;
 
 const router = useRouter();

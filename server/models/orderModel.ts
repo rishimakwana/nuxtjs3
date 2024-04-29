@@ -9,16 +9,21 @@ export default {
     try {
         return await Order.findOne(params, fields);
     } catch (error) {
-        console.error("Error in findOne query:", error);
         throw error;
     }
   },
 
-  get: async () => {
+  get: async (searchQuery: any, options: any = {}) => {
     try {
-      return await Order.find();
+      const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
+
+      const orders = await Order.find(searchQuery)
+        .sort(sort)
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+      return orders;
     } catch (error) {
-      console.error("Error in get query:", error);
       throw error;
     }
   },
@@ -34,7 +39,6 @@ export default {
         .limit(size)
         .skip(size * (page - 1));
     } catch (error) {
-      console.error("Error in getPages query:", error);
       throw error;
     }
   },
@@ -43,7 +47,6 @@ export default {
     try {
       return await Order.countDocuments(params.query ? params.query : params);
     } catch (error) {
-      console.error("Error in getCount query:", error);
       throw error;
     }
   },
@@ -53,7 +56,6 @@ export default {
       let newOrder = new Order(params);
       return await newOrder.save();
     } catch (error) {
-      console.error("Error in add query:", error);
       throw error;
     }
   },
@@ -62,7 +64,6 @@ export default {
     try {
       return await Order.updateOne(params.selector, { $set: params.data });
     } catch (error) {
-      console.error("Error in update query:", error);
       throw error;
     }
   },
@@ -71,7 +72,6 @@ export default {
     try {
       return await Order.updateMany(params.selector, { $set: params.data });
     } catch (error) {
-      console.error("Error in updateMany query:", error);
       throw error;
     }
   },
@@ -81,7 +81,6 @@ export default {
       const deletedOrder = await Order.findByIdAndDelete(id);
       return deletedOrder;
     } catch (error) {
-      console.error("Error in delete query:", error);
       throw error;
     }
   },

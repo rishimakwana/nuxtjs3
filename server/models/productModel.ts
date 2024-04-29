@@ -7,18 +7,23 @@ const Product = connection.model("Product", productSchema);
 export default {
   findOne: async (params: any, fields: any = null) => {
     try {
-        return await Product.findOne(params, fields);
+      return await Product.findOne(params, fields);
     } catch (error) {
-        console.error("Error in findOne query:", error);
-        throw error;
+      throw error;
     }
   },
 
-  get: async (params: any, fields: any = null) => {
+  get: async (searchQuery: any, options: any = {}) => {
     try {
-      return await Product.find(params, fields).sort({ createdAt: -1 });
+      const { page = 1, limit = 10, sort = { createdAt: -1 } } = options;
+
+      const products = await Product.find(searchQuery)
+        .sort(sort)
+        .skip((page - 1) * limit)
+        .limit(limit);
+
+      return products;
     } catch (error) {
-      console.error("Error in get query:", error);
       throw error;
     }
   },
@@ -34,7 +39,6 @@ export default {
         .limit(size)
         .skip(size * (page - 1));
     } catch (error) {
-      console.error("Error in getPages query:", error);
       throw error;
     }
   },
@@ -43,7 +47,6 @@ export default {
     try {
       return await Product.countDocuments(params.query ? params.query : params);
     } catch (error) {
-      console.error("Error in getCount query:", error);
       throw error;
     }
   },
@@ -54,7 +57,6 @@ export default {
       let newProduct = new Product(params);
       return await newProduct.save();
     } catch (error) {
-      console.error("Error in add query:", error);
       throw error;
     }
   },
@@ -63,7 +65,6 @@ export default {
     try {
       return await Product.updateOne(params.selector, { $set: params.data });
     } catch (error) {
-      console.error("Error in update query:", error);
       throw error;
     }
   },
@@ -72,7 +73,6 @@ export default {
     try {
       return await Product.updateMany(params.selector, { $set: params.data });
     } catch (error) {
-      console.error("Error in updateMany query:", error);
       throw error;
     }
   },
@@ -82,7 +82,6 @@ export default {
       const deletedProduct = await Product.findByIdAndDelete(id);
       return deletedProduct;
     } catch (error) {
-      console.error("Error in delete query:", error);
       throw error;
     }
   },

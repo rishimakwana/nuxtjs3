@@ -5,12 +5,6 @@ import commonMessage from "~/constants/message";
 
 
 const toast = useToast()
-// console.log(useToast,"useToast----------");
-
-// console.log(toast,"*****************--------------------------");
-
-
-const referral = ref(false);
 const togglePassword = ref(false);
 const toggleCPassword = ref(false);
 
@@ -29,13 +23,10 @@ const handleSubmit = async (values: any, actions: any) => {
             method: 'post',
             body: data
         })
-        if (res.statusCode == 200) {
-            console.log(toast,"toast---------------------");
-            
+        if (res.statusCode == 200) {         
             toast.add({ title: 'dsfsdfsdf sdfsd fsdfsdf sdf' })
-            // router.push('/login');
+            router.push('/login');
         }
-        console.log('body====--------------', res);
         // actions.resetForm();
     } catch (error) {
         // toast.error('Registration failed. Please try again later.');

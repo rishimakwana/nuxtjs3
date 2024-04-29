@@ -10,7 +10,6 @@ export default defineEventHandler(async (event: any) => {
 
     return user;
   } catch (error) {
-    console.error("Error in API handler:", error);
     return { statusCode: 500, body: "Internal Server Error" };
   }
 });

@@ -1,52 +1,9 @@
 <script lang="ts" setup>
 // Columns
-const columns = [{
-  key: '_id',
-  label: 'Id',
-  sortable: true
-}, {
-  key: 'name',
-  label: 'Name',
-  sortable: true
-}, {
-  key: 'price',
-  label: 'Price',
-  sortable: true
-}, 
-{
-  key: 'status',
-  label: 'Status',
-  sortable: false
-},
-{
-  key: 'url',
-  label: 'url',
-  sortable: false
-},
-{
-  key: 'formOption',
-  label: 'Form Option',
-  sortable: false
-},
-{
-  key: 'category',
-  label: 'Category',
-  sortable: false
-},
-// {
-//   key: 'category2',
-//   label: 'Sub Category',
-//   sortable: false
-// },
-// {
-//   key: 'category3',
-//   label: 'Sub Product Category',
-//   sortable: false
-// },
-]
+import { ProductColumns } from '~/constants/columns';
 
-const selectedColumns = ref(columns)
-const columnsTable = computed(() => columns.filter((column) => selectedColumns?.value?.includes(column)))
+const selectedColumns = ref(ProductColumns)
+const columnsTable = computed(() => ProductColumns.filter((column) => selectedColumns?.value?.includes(column)))
 
 // Selected Rows
 const selectedRows = ref<any>([])
@@ -82,11 +39,12 @@ const pageCount = ref(20)
 const pageTotal = ref(200) // This value should be dynamic coming from the API
 
 // Data
+
 const { data: products, pending } = await useLazyAsyncData<{
   id: number
   title: string
   completed: string
-}[]>('products', () => ($fetch as any)(`/api/product/getall`, {
+}[]>('products', () => ($fetch as any)(`/api/product`, {
   query: {
     q: search.value,
     'page': page.value,
@@ -162,7 +120,7 @@ const { data: products, pending } = await useLazyAsyncData<{
 
     <!-- Number of rows & Pagination -->
     <template #footer>
-      <div class="flex flex-wrap justify-between items-center">
+      <div v-if="products?.data && products?.data.length > 0" class="flex flex-wrap justify-between items-center">
             <div class="flex items-center gap-1.5">
               <span class="text-sm leading-5">Rows per page:</span>
       

@@ -11,36 +11,15 @@ useHead({
   title: `Create product | Nuxt App`,
 })
 const isOpen = ref(false)
-const bumpModal = ref(false)
-const editBump = ref(false)
-const activeItem = ref('Add Product')
 const isNewProduct = ref(true)
 const enableProductOptions = ref(true)
 const isProductOptionsEnable = ref("Enable")
 const wholeSaleDataList = ref([{ count: "", price: "" }])
-const navItems = ['Add Product', 'Checkout Page', 'Success Page']
 const payload = ref<any>({ ...productInit, ...formInit })
-
-  const items = [{
-  slot: 'desktop',
-  label: 'Desktop',
-  icon: 'i-heroicons-computer-desktop',
-}, {
-  slot: 'mobile',
-  label: 'Mobile',
-  icon: 'i-heroicons-device-phone-mobile',
-}]
 
 const accountForm = reactive({ name: 'Benjamin', username: 'benjamincanac' })
 const passwordForm = reactive({ currentPassword: '', newPassword: '' })
 
-function onSubmitAccount () {
-  console.log('Submitted form:', accountForm)
-}
-
-function onSubmitPassword () {
-  console.log('Submitted form:', passwordForm)
-}
 const statusOptions = [
   {
     label: t("common.draft"),
@@ -122,7 +101,6 @@ const save = async () => {
     category3:payload.value.category3,
     status:payload.value.status,
   }
-  console.log("data-------**************-",data);
   const res = await $fetch('/api/product/save', {
       method: 'post',
       body: data
@@ -130,8 +108,6 @@ const save = async () => {
   if(res.statusCode == 200){
     navigateTo('/products')
   }
-  console.log(res,"application-----------------------------");
-  
   isOpen.value = false;
 }
 
@@ -140,9 +116,7 @@ const automaticFillUrl = () => {
     payload.value.url = payload.value.name
 }
 const updatedPrice = (val:any) => {
-  payload.value.price = val
-  console.log(val,"------------------updatedPrice--");
-  
+  payload.value.price = val  
 }
 const increaseValue = (type: string, index: number) => {
   if (type == "RegularPrice") {

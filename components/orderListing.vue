@@ -1,52 +1,9 @@
 <script lang="ts" setup>
 // Columns
-const columns = [{
-  key: '_id',
-  label: 'Id',
-  sortable: true
-}, {
-  key: 'name',
-  label: 'Name',
-  sortable: true
-}, {
-  key: 'price',
-  label: 'Price',
-  sortable: true
-}, 
-{
-  key: 'status',
-  label: 'Status',
-  sortable: false
-},
-{
-  key: 'url',
-  label: 'url',
-  sortable: false
-},
-{
-  key: 'formOption',
-  label: 'Form Option',
-  sortable: false
-},
-{
-  key: 'category',
-  label: 'Category',
-  sortable: false
-},
-// {
-//   key: 'category2',
-//   label: 'Sub Category',
-//   sortable: false
-// },
-// {
-//   key: 'category3',
-//   label: 'Sub Product Category',
-//   sortable: false
-// },
-]
+import { OrderColumns } from '~/constants/columns';
 
-const selectedColumns = ref(columns)
-const columnsTable = computed(() => columns.filter((column) => selectedColumns?.value?.includes(column)))
+const selectedColumns = ref(OrderColumns)
+const columnsTable = computed(() => OrderColumns.filter((column) => selectedColumns?.value?.includes(column)))
 
 // Selected Rows
 const selectedRows = ref<any>([])
@@ -82,11 +39,11 @@ const pageCount = ref(20)
 const pageTotal = ref(200) // This value should be dynamic coming from the API
 
 // Data
-const { data: products, pending } = await useLazyAsyncData<{
+const { data: orders, pending } = await useLazyAsyncData<{
   id: number
   title: string
   completed: string
-}[]>('products', () => ($fetch as any)(`/api/product/getall`, {
+}[]>('orders', () => ($fetch as any)(`/api/order`, {
   query: {
     q: search.value,
     'page': page.value,
@@ -124,7 +81,7 @@ const { data: products, pending } = await useLazyAsyncData<{
     <!-- Table -->
     <UTable
       v-model:sort="sort"
-      :rows="products.data"
+      :rows="orders.data"
       :columns="columnsTable"
       :loading="pending"
       sort-asc-icon="i-heroicons-arrow-up"

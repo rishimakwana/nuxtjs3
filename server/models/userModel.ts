@@ -8,7 +8,6 @@ export default {
     try {
         return await User.findOne(params, fields);
     } catch (error) {
-        console.error("Error in findOne query:", error);
         throw error;
     }
   },
@@ -16,7 +15,6 @@ export default {
     try {
       return await User.find(params, fields).sort({ createdAt: -1 });
     } catch (error) {
-      console.error("Error in get query:", error);
       throw error;
     }
   },
@@ -26,7 +24,6 @@ export default {
         .populate("role_id")
         .sort({ createdAt: -1 });
     } catch (error) {
-      console.error("Error in get_w_role query:", error);
       throw error;
     }
   },
@@ -42,7 +39,6 @@ export default {
         .limit(size)
         .skip(size * (page - 1));
     } catch (error) {
-      console.error("Error in getPages query:", error);
       throw error;
     }
   },
@@ -63,7 +59,6 @@ export default {
         }
       );
     } catch (error) {
-      console.error("Error in getFollowup query:", error);
       throw error;
     }
   },
@@ -72,43 +67,6 @@ export default {
     try {
       return await User.countDocuments(params.query ? params.query : params);
     } catch (error) {
-      console.error("Error in getCount query:", error);
-      throw error;
-    }
-  },
-
-  get_w_select: async (params: any, select: any) => {
-    try {
-      return await User.find(params).select(select);
-    } catch (error) {
-      console.error("Error in get_w_select query:", error);
-      throw error;
-    }
-  },
-
-  get_w_sort: async (params: any, select: any, sort: any) => {
-    try {
-      return await User.find(params).select(select).sort(sort);
-    } catch (error) {
-      console.error("Error in get_w_sort query:", error);
-      throw error;
-    }
-  },
-
-  get_w_password: async (params: any) => {
-    try {
-      return await User.find(params).select("+password");
-    } catch (error) {
-      console.error("Error in get_w_password query:", error);
-      throw error;
-    }
-  },
-
-  populate: async (params: any, path: any) => {
-    try {
-      return await User.populate(params, path);
-    } catch (error) {
-      console.error("Error in populate query:", error);
       throw error;
     }
   },
@@ -118,16 +76,6 @@ export default {
       let newUser = new User(params);
       return await newUser.save();
     } catch (error) {
-      console.error("Error in add query:", error);
-      throw error;
-    }
-  },
-
-  push: async (params: any) => {
-    try {
-      return await User.updateOne(params.selector, { $push: params.data });
-    } catch (error) {
-      console.error("Error in push query:", error);
       throw error;
     }
   },
@@ -136,7 +84,6 @@ export default {
     try {
       return await User.updateOne(params.selector, { $set: params.data });
     } catch (error) {
-      console.error("Error in update query:", error);
       throw error;
     }
   },
@@ -146,7 +93,6 @@ export default {
       const deletedUser = await User.findByIdAndDelete(id);
       return deletedUser;
     } catch (error) {
-      console.error("Error in delete query:", error);
       throw error;
     }
   },

@@ -17,7 +17,6 @@ export default {
         });
       }
       const result = await Product.get();
-      console.log("result=====", result);
       return { result: result };
     } catch (error) {
       return parseError(error);
@@ -35,8 +34,6 @@ export default {
 
       return { reqbody: reqbody, query: query, cookies: cookies };
     } catch (error: any) {
-      console.error("Error in API handler:", error);
-
       if (error?.cause) {
         return error;
       } else if (error.errors) {
