@@ -2,9 +2,8 @@
 import { object, string, ref as yupRef } from "yup";
 import { configure } from "vee-validate";
 import commonMessage from "~/constants/message";
-
-
 const toast = useToast()
+
 const togglePassword = ref(false);
 const toggleCPassword = ref(false);
 
@@ -23,8 +22,8 @@ const handleSubmit = async (values: any, actions: any) => {
             method: 'post',
             body: data
         })
-        if (res.statusCode == 200) {         
-            toast.add({ title: 'dsfsdfsdf sdfsd fsdfsdf sdf' })
+        if (res.statusCode == 200) { 
+            toast.add({ title: 'User signup successfully!' })    
             router.push('/login');
         }
         // actions.resetForm();
@@ -170,5 +169,6 @@ definePageMeta({
                 </div>
             </div>
         </div>
+        <UNotifications />
     </section>
 </template>

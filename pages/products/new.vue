@@ -2,6 +2,7 @@
 import productInit from '~/constants/productInit';
 import formInit from '~/constants/formInit';
 const { t } = useI18n();
+const toast = useToast()
 
 definePageMeta({
   middleware: 'auth',
@@ -16,9 +17,6 @@ const enableProductOptions = ref(true)
 const isProductOptionsEnable = ref("Enable")
 const wholeSaleDataList = ref([{ count: "", price: "" }])
 const payload = ref<any>({ ...productInit, ...formInit })
-
-const accountForm = reactive({ name: 'Benjamin', username: 'benjamincanac' })
-const passwordForm = reactive({ currentPassword: '', newPassword: '' })
 
 const statusOptions = [
   {
@@ -107,6 +105,7 @@ const save = async () => {
   })
   if(res.statusCode == 200){
     navigateTo('/products')
+    toast.add({ title: 'Product created successfully!' })
   }
   isOpen.value = false;
 }
@@ -505,6 +504,7 @@ const removeWhosale = (num: number) => {
             Save
           </UButton>
     </div>
+    <UNotifications />
   </div>
 </template>
 

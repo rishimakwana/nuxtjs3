@@ -1,4 +1,5 @@
 import orderModel from "~/server/models/orderModel";
+import parseError from "~/server/utils/errorParser";
 
 export default defineEventHandler(async (event: any) => {
   try {
@@ -11,21 +12,6 @@ export default defineEventHandler(async (event: any) => {
       ...savedUser.toJSON(),
     };
   } catch (error: any) {
-    if (error?.cause) {
-      return error;
-    } else if (error.errors) {
-      throw createError({
-        statusCode: 400,
-        statusMessage: error.message,
-        data: error.errors,
-        stack: "",
-      });
-    } else {
-      throw createError({
-        statusCode: 500,
-        statusMessage: "Internal server error",
-        stack: "",
-      });
-    }
+    return parseError(error);
   }
 });

@@ -1,4 +1,5 @@
 import productModel from "~/server/models/productModel";
+import parseError from "~/server/utils/errorParser";
 
 export default defineEventHandler(async (event: any) => {
     try {
@@ -21,21 +22,6 @@ export default defineEventHandler(async (event: any) => {
           const savedUser = await productModel.add(reqbody);
           return { statusCode: 200, message : "Product created successfully." , ...savedUser.toJSON() };
       } catch (error: any) {
-        if (error?.cause) {
-          return error;
-        } else if (error.errors) {
-          throw createError({
-            statusCode: 400,
-            statusMessage: error.message,
-            data: error.errors,
-            stack: "",
-          });
-        } else {
-          throw createError({
-            statusCode: 500,
-            statusMessage: "Internal server error",
-            stack: "",
-          });
-        }
+        return parseError(error);
       }
 });

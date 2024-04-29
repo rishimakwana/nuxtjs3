@@ -2,6 +2,7 @@
 import { ref } from "vue";
 const { t } = useI18n();
 import type { FormError, FormSubmitEvent } from "#ui/types";
+const toast = useToast()
 
 definePageMeta({
   middleware: "auth",
@@ -53,7 +54,7 @@ async function search (q: string) {
   loading.value = true
   const products = await $fetch<any[]>('/api/product', { params: { q } })
   loading.value = false  
-  return products?.data 
+  return products?.data
 }
 const handelConfirm = () => {
   navigateTo('/orders')
@@ -84,6 +85,7 @@ async function onSubmit(event: FormSubmitEvent<any>) {
   if (res.statusCode == 200) {
     isOpen.value = false;
     navigateTo("/orders");
+    toast.add({ title: 'Order created successfully!' })
 
   }
 }
@@ -184,5 +186,6 @@ const cancel = () => {
         </div>
       </UCard>
     </UModal>
+    <UNotifications />
   </div>
 </template>

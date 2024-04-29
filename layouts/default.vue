@@ -21,5 +21,6 @@ const toggleSidebar = ()=>{
           <slot />
     </div>
     <AppFooter />
+    <UNotifications />
   </div>
 </template>

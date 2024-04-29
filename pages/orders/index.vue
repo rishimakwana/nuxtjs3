@@ -22,5 +22,6 @@ useHead({
       </div>
     </div>
     <OrderListing />
+    <UNotifications />
     </UContainer>
 </template>
