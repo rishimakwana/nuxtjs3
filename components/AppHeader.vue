@@ -62,9 +62,7 @@ const items = [
             <li>
               <UPopover>
                 <UChip text="24" size="2xl" color="red">
-                  <img
-                    src="data:image/svg+xml;base64,PHN2ZyB3aWR0aD0iMTkiIGhlaWdodD0iMjEiIHZpZXdCb3g9IjAgMCAxOSAyMSIgZmlsbD0ibm9uZSIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KPGVsbGlwc2UgY3g9IjkuNDAzMzciIGN5PSIxNS43OTE5IiByeD0iOC40MDMzNyIgcnk9IjMuODE5NzEiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8Y2lyY2xlIGN4PSI5LjQwMzA4IiBjeT0iMTQuMTMzNSIgcj0iMS44NTIzIiBzdHJva2U9IndoaXRlIiBzdHJva2Utd2lkdGg9IjEuMyIgc3Ryb2tlLW1pdGVybGltaXQ9IjEwIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz4KPHBhdGggZD0iTTE1LjkxNjkgMTAuNTc5NkwxNS40NTk3IDguNTczNDFDMTQuODE0MiA1Ljc0MDMzIDEyLjI5NDggMy43MzA0NyA5LjM4OTEyIDMuNzMwNDdWMy43MzA0N0M2LjQ5NjM5IDMuNzMwNDcgMy45ODQ3IDUuNzIyOCAzLjMyNjMyIDguNTM5NkwyLjEwNTQ3IDEzLjc2MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8cGF0aCBkPSJNMTAuNjk2IDMuODA3ODVDMTAuODM3NiAzLjU3NzMzIDEwLjkxOTIgMy4zMDYwMyAxMC45MTkyIDMuMDE1NjVDMTAuOTE5MiAyLjE3ODU4IDEwLjI0MDcgMS41IDkuNDAzNTkgMS41QzguNTY2NTIgMS41IDcuODg3OTQgMi4xNzg1OCA3Ljg4Nzk0IDMuMDE1NjVDNy44ODc5NCAzLjI3NzcyIDcuOTU0NDUgMy41MjQyNSA4LjA3MTUyIDMuNzM5MjkiIHN0cm9rZT0id2hpdGUiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbWl0ZXJsaW1pdD0iMTAiIHN0cm9rZS1saW5lY2FwPSJyb3VuZCIgc3Ryb2tlLWxpbmVqb2luPSJyb3VuZCIvPgo8L3N2Zz4="
-                    alt="icon noti">
+                  <img src="~/assets/images/notifi.svg" alt="icon noti">
                 </UChip>
                 <template #panel>
                   <div class="max-w-sm">
