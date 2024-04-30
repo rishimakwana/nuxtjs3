@@ -1,45 +1,34 @@
 <script lang="ts" setup>
+interface Row {
+  _id: string;
+}
 // Columns
 import { ProductColumns } from '~/constants/columns';
-
-const selectedColumns = ref(ProductColumns)
-const columnsTable = computed(() => ProductColumns.filter((column) => selectedColumns?.value?.includes(column)))
+const selectedColumns = ref([...ProductColumns]);
+const columnsTable = computed(() => selectedColumns.value);
 
 // Selected Rows
-const selectedRows = ref<any>([])
+const selectedRows = ref<Row[]>([]);
 
 function select (row:any) {
-  const index = selectedRows.value.findIndex((item:any) => item.id === row.id)
+  console.log(row,"/////////////////////////////********************************");
+  const index = selectedRows.value.findIndex((item:any) => item._id == row._id)
   if (index === -1) {
     selectedRows.value.push(row)
   } else {
     selectedRows.value.splice(index, 1)
   }
+  console.log(selectedRows,"selectedRows*9999999999999999999999999999999");
 }
 
 const search = ref('')
 const filtersModal = ref(false)
-const selectedStatus = ref<any>([])
-const searchStatus = computed(() => {
-  if (selectedStatus.value?.length === 0) {
-    return ''
-  }
-
-  if (selectedStatus?.value?.length > 1) {
-    return `?completed=${selectedStatus.value[0].value}&completed=${selectedStatus.value[1].value}`
-  }
-
-  return `?completed=${selectedStatus.value[0].value}`
-})
-
 // Pagination
 const sort = ref({ column: 'id', direction: 'asc' as const })
 const page = ref(1)
 const pageCount = ref(20)
-const pageTotal = ref(200) // This value should be dynamic coming from the API
 
 // Data
-
 const { data: products, pending } = await useLazyAsyncData<{
   id: number
   title: string
@@ -54,22 +43,18 @@ const { data: products, pending } = await useLazyAsyncData<{
   }
 }), {
   default: () => [],
-  watch: [page, search, searchStatus, pageCount, sort]
+  watch: [page, search, pageCount, sort]
 })
+
+watch(selectedRows, (val) => {
+console.log(val,"oooooooooooooooooooooooooooooooooooooooo");
+}, { immediate: true });
+
 </script>
 
 <template>
   <UCard
-    class="w-full"
-    :ui="{
-      base: '',
-      ring: '',
-      divide: 'divide-y divide-gray-200 dark:divide-gray-700',
-      header: { padding: 'px-4 py-5' },
-      body: { padding: '', base: 'divide-y divide-gray-200 dark:divide-gray-700' },
-      footer: { padding: 'p-4' }
-    }"
-  >
+    class="w-full" :ui="{ base: '', ring: '', divide: 'divide-y divide-gray-200 dark:divide-gray-700', header: { padding: 'px-4 py-5' }, body: { padding: '', base: 'divide-y divide-gray-200 dark:divide-gray-700' }, footer: { padding: 'p-4' } }">
 
     <!-- Filters -->
     <div class="flex items-center justify-between gap-3 px-4 py-3">
@@ -81,6 +66,8 @@ const { data: products, pending } = await useLazyAsyncData<{
 
     <!-- Table -->
     <UTable
+      @click="select"
+      v-model="selectedRows" @select="select"
       v-model:sort="sort"
       :rows="products.data"
       :columns="columnsTable"
@@ -89,34 +76,8 @@ const { data: products, pending } = await useLazyAsyncData<{
       sort-desc-icon="i-heroicons-arrow-down"
       sort-mode="manual"
       class="w-full"
-      :ui="{ td: { base: 'max-w-[0] truncate' } }"
-    >
-      <template #completed-data="{ row }">
-        <UBadge size="xs" :label="row.completed ? 'Completed' : 'In Progress'" :color="row.completed ? 'emerald' : 'orange'" variant="subtle" />
-      </template>
-
-      <template #actions-data="{ row }">
-        <UButton
-          v-if="!row.completed"
-          icon="i-heroicons-check"
-          size="2xs"
-          color="emerald"
-          variant="outline"
-          :ui="{ rounded: 'rounded-full' }"
-          square
-        />
-
-        <UButton
-          v-else
-          icon="i-heroicons-arrow-path"
-          size="2xs"
-          color="orange"
-          variant="outline"
-          :ui="{ rounded: 'rounded-full' }"
-          square
-        />
-      </template>
-    </UTable>
+      :ui="{ td: { base: 'max-w-[0] truncate' } }" 
+    />
 
     <!-- Number of rows & Pagination -->
     <template #footer>
@@ -135,7 +96,7 @@ const { data: products, pending } = await useLazyAsyncData<{
         <UPagination
           v-model="page"
           :page-count="pageCount"
-          :total="pageTotal"
+          :total="products?.data.length"
           :ui="{
             wrapper: 'flex items-center gap-1',
             rounded: '!rounded-full min-w-[32px] justify-center',
@@ -163,6 +124,6 @@ const { data: products, pending } = await useLazyAsyncData<{
 
           <!-- <Placeholder class="h-32" /> -->
         </UCard>
-      </UModal>
+    </UModal>
   </UCard>
 </template>

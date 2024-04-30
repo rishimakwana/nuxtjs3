@@ -5,6 +5,13 @@ const connection: any = getConnection();
 const Product = connection.model("Product", productSchema);
 
 export default {
+  findById: async (id: string, fields: any = null) => {
+    try {
+      return await Product.findById(id, fields);
+    } catch (error) {
+      throw error;
+    }
+  },
   findOne: async (params: any, fields: any = null) => {
     try {
       return await Product.findOne(params, fields);

@@ -10,7 +10,7 @@ export default defineNuxtConfig({
     "nuxt-server-utils",
     "@vee-validate/nuxt",
     "@samk-dev/nuxt-vcalendar",
-    "@nuxtjs/i18n"
+    "@nuxtjs/i18n",
   ],
   veeValidate: {
     autoImports: true,

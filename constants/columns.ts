@@ -68,11 +68,6 @@ export const OrderColumns = [{
     sortable: false
 },
 {
-    key: 'notes',
-    label: 'Notes',
-    sortable: false
-},
-{
     key: 'paymentStatus',
     label: 'Payment Status',
     sortable: false
@@ -82,4 +77,8 @@ export const OrderColumns = [{
     label: 'Order Date',
     sortable: false
 },
+{
+    key: 'actions',
+    label: 'Actions',
+}
 ]

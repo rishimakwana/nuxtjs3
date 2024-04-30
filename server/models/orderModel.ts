@@ -1,10 +1,18 @@
 import orderSchema from "./schema/orderSchema";
 import getConnection from "../utils/dbConnection";
+import order from "./schema/orderSchema";
 
 const connection: any = getConnection();
 const Order = connection.model("Order", orderSchema);
 
 export default {
+  findById: async (id: string, fields: any = null) => {
+    try {
+      return await Order.findById(id, fields);
+    } catch (error) {
+      throw error;
+    }
+  },
   findOne: async (params: any, fields: any = null) => {
     try {
         return await Order.findOne(params, fields);

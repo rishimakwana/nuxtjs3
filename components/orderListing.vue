@@ -1,7 +1,6 @@
 <script lang="ts" setup>
 // Columns
 import { OrderColumns } from '~/constants/columns';
-
 const selectedColumns = ref(OrderColumns)
 const columnsTable = computed(() => OrderColumns.filter((column) => selectedColumns?.value?.includes(column)))
 
@@ -19,31 +18,41 @@ function select (row:any) {
 
 const search = ref('')
 const filtersModal = ref(false)
-const selectedStatus = ref<any>([])
-const searchStatus = computed(() => {
-  if (selectedStatus.value?.length === 0) {
-    return ''
-  }
 
-  if (selectedStatus?.value?.length > 1) {
-    return `?completed=${selectedStatus.value[0].value}&completed=${selectedStatus.value[1].value}`
+async function edit(row:any) {
+  console.log(row,"row");
+}
+async function deleteOrder(row:any) {
+  console.log(row._id,"row._id00000000000000");
+  try {
+    if(row._id){
+      await $fetch('/api/order/delete', {
+          method: 'POST',
+          body: {
+            id: row._id
+          }
+        })
+    }
+  } catch (error) {
+    console.log(error,"error");
   }
-
-  return `?completed=${selectedStatus.value[0].value}`
-})
+}
 
 // Pagination
 const sort = ref({ column: 'id', direction: 'asc' as const })
 const page = ref(1)
 const pageCount = ref(20)
-const pageTotal = ref(200) // This value should be dynamic coming from the API
-
+const items = (row:any) => [
+  [{
+    label: 'Edit',
+    icon: 'i-heroicons-pencil-square-20-solid',
+  }, {
+    label: 'Delete',
+    icon: 'i-heroicons-trash-20-solid',
+  }]
+]
 // Data
-const { data: orders, pending } = await useLazyAsyncData<{
-  id: number
-  title: string
-  completed: string
-}[]>('orders', () => ($fetch as any)(`/api/order`, {
+const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch as any)(`/api/order`, {
   query: {
     q: search.value,
     'page': page.value,
@@ -53,7 +62,7 @@ const { data: orders, pending } = await useLazyAsyncData<{
   }
 }), {
   default: () => [],
-  watch: [page, search, searchStatus, pageCount, sort]
+  watch: [page, search, pageCount, sort]
 })
 </script>
 
@@ -73,13 +82,18 @@ const { data: orders, pending } = await useLazyAsyncData<{
     <!-- Filters -->
     <div class="flex items-center justify-between gap-3 px-4 py-3">
       <UInput v-model="search" icon="i-heroicons-magnifying-glass-20-solid" placeholder="Search..." />
-      <UButton class="w-24" color="white" @click="() =>  { filtersModal = true }">
+
+      <div class="flex items-center">
+        <UButton class="w-24 ml-2 " color="white" @click="() =>  { filtersModal = true }">
         <UIcon name="i-heroicons-bars-3-bottom-right"/> Filters
-      </UButton>
+        </UButton>
+      </div>
     </div>
 
     <!-- Table -->
     <UTable
+      v-model="selectedRows" 
+      @select="select"
       v-model:sort="sort"
       :rows="orders.data"
       :columns="columnsTable"
@@ -90,30 +104,14 @@ const { data: orders, pending } = await useLazyAsyncData<{
       class="w-full"
       :ui="{ td: { base: 'max-w-[0] truncate' } }"
     >
-      <template #completed-data="{ row }">
-        <UBadge size="xs" :label="row.completed ? 'Completed' : 'In Progress'" :color="row.completed ? 'emerald' : 'orange'" variant="subtle" />
-      </template>
+    <template #name-data="{ row }">
+      <span :class="[selectedRows.find((item:any) => item._id == row._id) && 'text-primary-500 dark:text-primary-400']">{{ row.name }}</span>
+    </template>
 
       <template #actions-data="{ row }">
-        <UButton
-          v-if="!row.completed"
-          icon="i-heroicons-check"
-          size="2xs"
-          color="emerald"
-          variant="outline"
-          :ui="{ rounded: 'rounded-full' }"
-          square
-        />
-
-        <UButton
-          v-else
-          icon="i-heroicons-arrow-path"
-          size="2xs"
-          color="orange"
-          variant="outline"
-          :ui="{ rounded: 'rounded-full' }"
-          square
-        />
+        <UDropdown :items="items(row)">
+          <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
+        </UDropdown>
       </template>
     </UTable>
 
@@ -134,7 +132,7 @@ const { data: orders, pending } = await useLazyAsyncData<{
         <UPagination
           v-model="page"
           :page-count="pageCount"
-          :total="pageTotal"
+          :total="orders && orders?.data && orders?.data.length"
           :ui="{
             wrapper: 'flex items-center gap-1',
             rounded: '!rounded-full min-w-[32px] justify-center',
@@ -147,21 +145,5 @@ const { data: orders, pending } = await useLazyAsyncData<{
         />
       </div>
     </template>
-
-    <UModal v-model="filtersModal" prevent-close>
-        <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800' }">
-          <template #header>
-            <div class="flex items-center justify-between">
-              <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
-                Modal
-              </h3>
-              <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1"
-                @click="filtersModal = false" />
-            </div>
-          </template>
-
-          <!-- <Placeholder class="h-32" /> -->
-        </UCard>
-    </UModal>
   </UCard>
 </template>
