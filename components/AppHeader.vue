@@ -139,7 +139,8 @@ const items = [
               </template>
             </li>
             <li class="sm:pr-4 md:pr-8 pr-1">
-              <UToggle v-model="isDark" color="primary" />
+              <UToggle v-model="isDark" off-icon="i-heroicons-sun-20-solid h-3 w-3 text-gray-400 dark:text-gray-500"
+                on-icon="i-heroicons-moon-20-solid h-3 w-3 text-primary-500" color="primary" />
             </li>
             <form>
               <select v-model="locale">
