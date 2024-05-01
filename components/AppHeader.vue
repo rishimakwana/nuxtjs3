@@ -109,9 +109,7 @@ const items = [
                   <img class="icon-info" src="~/assets/img/icon/ic-information-black.svg" alt="">
                   <template #panel>
                     <span class="max-w-sm p-5 block">
-                      $t('settings.reservedBalance')
-                      $store.state.authfack.user ? parseInt($store.state.authfack.user.reservedBalance) : 0 |
-                      g_number_format
+                      Balance
                     </span>
                   </template>
                 </UPopover>

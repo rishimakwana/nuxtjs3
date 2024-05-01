@@ -17,13 +17,16 @@ function select (row:any) {
 }
 
 const search = ref('')
-const filtersModal = ref(false)
+let editOrderModal = ref(false)
+let editOrderData = ref<any>()
+let filtersModal = ref(false)
 
 async function edit(row:any) {
-  console.log(row,"row");
+  console.log(row,"row-----------------");
+  editOrderData = row
+  editOrderModal = true 
 }
 async function deleteOrder(row:any) {
-  console.log(row._id,"row._id00000000000000");
   try {
     if(row._id){
       await $fetch('/api/order/delete', {
@@ -32,6 +35,7 @@ async function deleteOrder(row:any) {
             id: row._id
           }
         })
+       refreshNuxtData('orders')
     }
   } catch (error) {
     console.log(error,"error");
@@ -42,15 +46,6 @@ async function deleteOrder(row:any) {
 const sort = ref({ column: 'id', direction: 'asc' as const })
 const page = ref(1)
 const pageCount = ref(20)
-const items = (row:any) => [
-  [{
-    label: 'Edit',
-    icon: 'i-heroicons-pencil-square-20-solid',
-  }, {
-    label: 'Delete',
-    icon: 'i-heroicons-trash-20-solid',
-  }]
-]
 // Data
 const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch as any)(`/api/order`, {
   query: {
@@ -109,9 +104,21 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
     </template>
 
       <template #actions-data="{ row }">
-        <UDropdown :items="items(row)">
-          <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-ellipsis-horizontal-20-solid" />
-        </UDropdown>
+
+        <UPopover mode="hover">
+          <UButton color="gray" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal-20-solid" />
+
+          <template #panel>
+            <div class="d-flex flex-column">
+              <div>
+                <UButton @click="edit(row)"  color="gray" variant="ghost" icon="i-heroicons-pencil-square-20-solid">Edit</UButton>
+              </div>
+              <div>
+                <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-trash-20-solid">Delete</UButton>
+              </div>
+            </div>
+          </template>
+        </UPopover>
       </template>
     </UTable>
 
@@ -145,5 +152,8 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
         />
       </div>
     </template>
+
+    <!-- Edit order model -->
+    <EditOrderModal :data="editOrderData" :val="editOrderModal" v-model:value="editOrderModal" />
   </UCard>
 </template>

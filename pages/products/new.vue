@@ -507,12 +507,5 @@ const removeWhosale = (num: number) => {
     <UNotifications />
   </div>
 </template>
-<router>
-  {
-      alias: [
-          '/products/update/:namea',
-      ]
-  }
-  </router>
 
 
