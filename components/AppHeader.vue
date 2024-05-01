@@ -47,15 +47,15 @@ const items = [
       <UContainer :ui="{ padding: 'px-0 sm:px-0 lg:px-0' }" class="flex flex-wrap items-center justify-between py-4">
         <div class="flex">
           <NuxtLink to="/" class="flex items-center ml-[10px]">
-            <img src="~/assets/images/logo-app-white.svg" :class="`${props.sidebarExpanded ? 'md:hidden' : ''} h-[20px] block`" alt="Logo" />
-            <img src="~/assets/images/formulir-logo-light.png" :class="`h-[20px] w-[150px] hidden ${props.sidebarExpanded ? 'md:block' : ''}`"
+            <img src="~/assets/images/e-commerce-favicon-color.png" :class="`${props.sidebarExpanded ? 'md:hidden' : ''} h-[20px] block`" alt="Logo" />
+            <img src="~/assets/images/e-commerce-high-resolution-logo.png" :class="`h-[35px] w-[150px] hidden ${props.sidebarExpanded ? 'md:block' : ''}`"
               alt="Logo" />
           </NuxtLink>
-          <button class="ml-3 sm:ml-10" @click="toggleSidebar()">
+          <UButton class="ml-3 sm:ml-10" @click="toggleSidebar()">
             
             <!-- v-click-outside="vcoConfig"> -->
             <img class="" src="~/assets/img/icon/menu_icon.svg" />
-          </button>
+          </UButton>
         </div>
         <div class="block w-auto" id="navbar-default">
           <ul class="font-medium flex p-0 flex-row space-x-3 md:space-x-6 rtl:space-x-reverse mt-0 border-0">

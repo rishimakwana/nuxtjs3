@@ -33,8 +33,6 @@ export default defineEventHandler(async (event: any) => {
         orderId: orderId,
         };
     } catch (error: any) {
-        console.log(error,"error/*-*******************");
-        
         return parseError(error);
     }
 });

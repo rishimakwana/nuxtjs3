@@ -1,18 +1,40 @@
 <script setup lang="ts">
 const props = defineProps(["data", "val"]);
-
+const emit = defineEmits();
 const payload: any = ref<any>({ ...props.data });
 const isOpen = ref(props.val);
-
-console.log(isOpen,"isOpenisOpenisOpenisOpenisOpen",props.val);
+const toast = useToast()
 
 // Emit the updated value on change
-const updateOrder = () => {
-  console.log(payload, "6+6666666");
-};
+const updateOrder = async() => {
+  try {
+    if(payload){
+      const update = await $fetch('/api/order/edit', {
+          method: 'POST',
+          body: payload.value
+        })
+      if(update.statusCode == 200){
+        isOpen.value = false
+        toast.add({ title: 'Order updated successfully!' })
+        refreshNuxtData('orders')
+      }
+    }
+  } catch (error) {
+    console.log(error,"error");
+  }};
+watch(isOpen, (val) => {
+  emit('closeModal', val);
+}, { immediate: true });
+
 </script>
 <template>
-  <UModal v-model="isOpen">
+  <UModal v-model="isOpen" prevent-close>
+    <div class="flex items-center justify-between px-4 pt-2">
+      <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
+        Edit Order
+      </h3>
+      <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+    </div>
     <UCard
       :ui="{
         ring: '',
@@ -21,7 +43,7 @@ const updateOrder = () => {
     >
       <!-- Products Dropdown -->
       <UFormGroup label="Selected Product">
-        <UInput disabled v-model="payload.productname" type="number" />
+        <UInput disabled v-model="payload.productname" type="text" />
       </UFormGroup>
 
       <UFormGroup label="Price" name="price">
@@ -55,10 +77,12 @@ const updateOrder = () => {
       </UFormGroup>
 
       <!-- save and cancel button -->
-      <UButton class="px-5 py-2 rounded-md" @click=""> Cancel </UButton>
-      <UButton class="px-5 py-2 rounded-md ml-2" @click="updateOrder">
-        Update
-      </UButton>
+      <div class="mt-2">
+        <UButton class="px-5 py-2 rounded-md" @click="isOpen = false"> Cancel </UButton>
+        <UButton class="px-5 py-2 rounded-md ml-2" @click="updateOrder">
+          Update
+        </UButton>
+      </div>
     </UCard>
   </UModal>
 </template>

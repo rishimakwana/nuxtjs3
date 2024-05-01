@@ -99,7 +99,7 @@ const cancel = () => {
   <div class="w-full max-w-screen-2xl m-auto">
     <header class="fixed top-0 w-full max-w-screen-2xl m-auto z-10">
       <div class="h-16 bg-blue-600 flex justify-between items-center">
-        <img src="~/assets/images/formulir-logo-light.png" :class="`h-[20px] w-[150px] ml-3 cursor-pointer`" alt="Logo"
+        <img src="~/assets/images/e-commerce-high-resolution-logo.png" :class="`h-[35px] w-[150px] ml-3 cursor-pointer`" alt="Logo"
           @click="handelQuit" />
         <div>
         </div>

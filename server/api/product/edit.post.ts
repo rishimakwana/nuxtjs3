@@ -5,15 +5,17 @@ export default defineEventHandler(async (event: any) => {
     try {
         // Read the body of the request
         const reqbody = await readBody(event);
+        const data = JSON.parse(JSON.stringify(reqbody))
+        const productId = data._id;
 
         // Find the existing product by ID
-        const existingProduct = await productModel.findById(reqbody.id);
+        const existingProduct = await productModel.findById(productId);
         if (!existingProduct) {
             throw createError({
                 statusCode: 404,
                 statusMessage: "Product not found",
                 fatal: false,
-                data: { id: reqbody.id },
+                data: { id: productId },
                 stack: "",
             });
         }

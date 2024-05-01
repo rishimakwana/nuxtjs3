@@ -1,30 +1,33 @@
 <script lang="ts" setup>
 // Columns
 import { OrderColumns } from '~/constants/columns';
-const selectedColumns = ref(OrderColumns)
-const columnsTable = computed(() => OrderColumns.filter((column) => selectedColumns?.value?.includes(column)))
+const selectedColumns = ref([...OrderColumns]);
+const columnsTable = computed(() => selectedColumns.value);
 
 // Selected Rows
 const selectedRows = ref<any>([])
 
 function select (row:any) {
-  const index = selectedRows.value.findIndex((item:any) => item.id === row.id)
-  if (index === -1) {
+  const index = selectedRows.value.findIndex((item:any) => item.id == row.id)
+  if (index == -1) {
     selectedRows.value.push(row)
   } else {
     selectedRows.value.splice(index, 1)
   }
 }
 
+// variable with ref
 const search = ref('')
 let editOrderModal = ref(false)
 let editOrderData = ref<any>()
 let filtersModal = ref(false)
 
 async function edit(row:any) {
-  console.log(row,"row-----------------");
-  editOrderData = row
-  editOrderModal = true 
+  editOrderData.value = row
+  editOrderModal.value = true 
+}
+async function closeModal(val:any) {
+  editOrderModal.value = val
 }
 async function deleteOrder(row:any) {
   try {
@@ -62,98 +65,101 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
 </script>
 
 <template>
-  <UCard
-    class="w-full"
-    :ui="{
-      base: '',
-      ring: '',
-      divide: 'divide-y divide-gray-200 dark:divide-gray-700',
-      header: { padding: 'px-4 py-5' },
-      body: { padding: '', base: 'divide-y divide-gray-200 dark:divide-gray-700' },
-      footer: { padding: 'p-4' }
-    }"
-  >
-
-    <!-- Filters -->
-    <div class="flex items-center justify-between gap-3 px-4 py-3">
-      <UInput v-model="search" icon="i-heroicons-magnifying-glass-20-solid" placeholder="Search..." />
-
-      <div class="flex items-center">
-        <UButton class="w-24 ml-2 " color="white" @click="() =>  { filtersModal = true }">
-        <UIcon name="i-heroicons-bars-3-bottom-right"/> Filters
-        </UButton>
-      </div>
-    </div>
-
-    <!-- Table -->
-    <UTable
-      v-model="selectedRows" 
-      @select="select"
-      v-model:sort="sort"
-      :rows="orders.data"
-      :columns="columnsTable"
-      :loading="pending"
-      sort-asc-icon="i-heroicons-arrow-up"
-      sort-desc-icon="i-heroicons-arrow-down"
-      sort-mode="manual"
+  <div>
+    <UCard
       class="w-full"
-      :ui="{ td: { base: 'max-w-[0] truncate' } }"
+      :ui="{
+        base: '',
+        ring: '',
+        divide: 'divide-y divide-gray-200 dark:divide-gray-700',
+        header: { padding: 'px-4 py-5' },
+        body: { padding: '', base: 'divide-y divide-gray-200 dark:divide-gray-700' },
+        footer: { padding: 'p-4' }
+      }"
     >
-    <template #name-data="{ row }">
-      <span :class="[selectedRows.find((item:any) => item._id == row._id) && 'text-primary-500 dark:text-primary-400']">{{ row.name }}</span>
-    </template>
-
-      <template #actions-data="{ row }">
-
-        <UPopover mode="hover">
-          <UButton color="gray" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal-20-solid" />
-
-          <template #panel>
-            <div class="d-flex flex-column">
-              <div>
-                <UButton @click="edit(row)"  color="gray" variant="ghost" icon="i-heroicons-pencil-square-20-solid">Edit</UButton>
-              </div>
-              <div>
-                <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-trash-20-solid">Delete</UButton>
-              </div>
-            </div>
-          </template>
-        </UPopover>
-      </template>
-    </UTable>
-
-    <!-- Number of rows & Pagination -->
-    <template #footer>
-      <div class="flex flex-wrap justify-between items-center">
-            <div class="flex items-center gap-1.5">
-              <span class="text-sm leading-5">Rows per page:</span>
-      
-              <USelect
-                v-model="pageCount"
-                :options="[3, 5, 10, 20, 30, 40]"
-                class="me-2 w-20"
-                size="xs"
-              />
-            </div>
-
-        <UPagination
-          v-model="page"
-          :page-count="pageCount"
-          :total="orders && orders?.data && orders?.data.length"
-          :ui="{
-            wrapper: 'flex items-center gap-1',
-            rounded: '!rounded-full min-w-[32px] justify-center',
-            default: {
-              activeButton: {
-                variant: 'outline'
-              }
-            }
-          }"
-        />
+  
+      <!-- Filters -->
+      <div class="flex items-center justify-between gap-3 px-4 py-3">
+        <UInput v-model="search" icon="i-heroicons-magnifying-glass-20-solid" placeholder="Search..." />
+  
+        <div class="flex items-center">
+          <UButton class="w-24 ml-2 " color="white" @click="() =>  { filtersModal = true }">
+          <UIcon name="i-heroicons-bars-3-bottom-right"/> Filters
+          </UButton>
+        </div>
       </div>
-    </template>
-
+  
+      <!-- Table -->
+      <UTable
+        v-model="selectedRows" 
+        @select="select"
+        v-model:sort="sort"
+        :rows="orders.data"
+        :columns="columnsTable"
+        :loading="pending"
+        sort-asc-icon="i-heroicons-arrow-up"
+        sort-desc-icon="i-heroicons-arrow-down"
+        sort-mode="manual"
+        class="w-full"
+        :ui="{ td: { base: 'max-w-[0] truncate' } }"
+      >
+      <template #name-data="{ row }">
+        <span :class="[selectedRows.find((item:any) => item._id == row._id) && 'text-primary-500 dark:text-primary-400']">{{ row.name }}</span>
+      </template>
+  
+        <template #actions-data="{ row }">
+  
+          <UPopover mode="hover">
+            <UButton color="gray" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal-20-solid" />
+  
+            <template #panel>
+              <div class="d-flex flex-column">
+                <div>
+                  <UButton @click="edit(row)"  color="gray" variant="ghost" icon="i-heroicons-pencil-square-20-solid">Edit</UButton>
+                </div>
+                <div>
+                  <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-trash-20-solid">Delete</UButton>
+                </div>
+              </div>
+            </template>
+          </UPopover>
+        </template>
+      </UTable>
+  
+      <!-- Number of rows & Pagination -->
+      <template #footer>
+        <div class="flex flex-wrap justify-between items-center">
+              <div class="flex items-center gap-1.5">
+                <span class="text-sm leading-5">Rows per page:</span>
+        
+                <USelect
+                  v-model="pageCount"
+                  :options="[3, 5, 10, 20, 30, 40]"
+                  class="me-2 w-20"
+                  size="xs"
+                />
+              </div>
+  
+          <UPagination
+            v-model="page"
+            :page-count="pageCount"
+            :total="orders && orders?.data && orders?.data.length"
+            :ui="{
+              wrapper: 'flex items-center gap-1',
+              rounded: '!rounded-full min-w-[32px] justify-center',
+              default: {
+                activeButton: {
+                  variant: 'outline'
+                }
+              }
+            }"
+          />
+        </div>
+      </template>
+    </UCard>
     <!-- Edit order model -->
-    <EditOrderModal :data="editOrderData" :val="editOrderModal" v-model:value="editOrderModal" />
-  </UCard>
+    <div v-if="editOrderModal">
+      <EditOrderModal :data="editOrderData" :val="editOrderModal" @closeModal="closeModal"/>
+    </div>
+  </div>
 </template>

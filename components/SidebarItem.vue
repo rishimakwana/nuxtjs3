@@ -17,7 +17,7 @@ const isActiveSubmenu = () => {
                 ? 'text-primary bg-white dark:bg-gray-500 dark:text-white'
                 : 'text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-gray-200'
                 }`" @click="updateMenu(item)">
-                <span :class="`mr-[12px] ${isActiveSubmenu() && 'bg-[#2E47BA]'} rounded-md p-3`">
+                <span :class="`mr-[12px] ${isActiveSubmenu() && 'bg-primary'} rounded-md p-3`">
                     <img v-if="item.src" :src="colorMode.value === 'dark' || isActiveSubmenu()
                         ? item.srcActive
                         : item.src
@@ -44,7 +44,7 @@ const isActiveSubmenu = () => {
                     ? 'text-primary'
                     : 'text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-gray-200'
                     }`" @click="updateMenu(item)">
-                    <span :class="`m-auto ${isActiveSubmenu() && 'bg-[#2E47BA]'} rounded-md p-3`">
+                    <span :class="`m-auto ${isActiveSubmenu() && 'bg-primary'} rounded-md p-3`">
                         <img v-if="item.src" :src="colorMode.value === 'dark' || isActiveSubmenu()
                             ? item.srcActive
                             : item.src
@@ -73,7 +73,7 @@ const isActiveSubmenu = () => {
             inactive-class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-gray-200"
             class="rounded-md flex px-[6px] py-[10px] relative font-[5000] text-[15px] w-full items-center"
             @click="updateMenu(item)">
-            <span v-if="item.src" :class="`mr-[12px] ${isActive && 'bg-[#2E47BA]'} rounded-md p-3`">
+            <span v-if="item.src" :class="`mr-[12px] ${isActive && 'bg-primary'} rounded-md p-3`">
                 <img :src="colorMode.value === 'dark' || isActive ? item.srcActive : item.src
                     " alt="Avatar" :class="'w-5'" />
             </span>
@@ -85,7 +85,7 @@ const isActiveSubmenu = () => {
             inactive-class="text-gray-500 dark:text-gray-400 hover:text-primary dark:hover:text-gray-200"
             class="rounded-md flex px-[6px] py-[10px] relative font-[5000] text-[15px] w-full items-center"
             @click="updateMenu(item)">
-            <span v-if="item.src" :class="`m-auto ${isActive && 'bg-[#2E47BA]'} rounded-md p-3`">
+            <span v-if="item.src" :class="`m-auto ${isActive && 'bg-primary'} rounded-md p-3`">
                 <img :src="colorMode.value === 'dark' || isActive ? item.srcActive : item.src
                     " alt="Avatar" :class="'w-5'" />
             </span>

@@ -5,7 +5,9 @@ export default defineEventHandler(async (event: any) => {
     try {
         const query: any = getQuery(event);
         // Extracting dynamic parameters from the event object
-        const { q, page, pageCount, sort } = query;
+
+        //in the sort it has field name "sort: id" and in the order it has order: asc
+        const { q, page, limit, sort, order } = query;
 
         // Constructing the search query
         let searchQuery: any = {};
@@ -15,11 +17,17 @@ export default defineEventHandler(async (event: any) => {
         }
 
         // Constructing the options for pagination and sorting
-        const options = {
+        let options:any = {
             page: page || 1,
-            limit: pageCount || 10,
-            sort: { [sort?.column]: sort?.direction === 'asc' ? 1 : -1 }
+            limit: limit || 10,
+            sort: {}  //[sort?.column]: sort?.direction === 'asc' ? 1 : -1
         };
+        if (sort && order) {
+            options.sort[sort] = order === 'asc' ? 1 : -1;
+        } else {
+            // Default sorting if not provided
+            options.sort['_id'] = 1; // Assuming 'id' as the default field to sort by
+        }
 
         // Fetch products based on the constructed query
         const result = await Order.get(searchQuery, options);

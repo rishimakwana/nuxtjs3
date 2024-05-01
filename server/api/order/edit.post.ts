@@ -5,9 +5,10 @@ export default defineEventHandler(async (event: any) => {
     try {
         // Read the body of the request
         const reqbody = await readBody(event);
+        const data = JSON.parse(JSON.stringify(reqbody))
 
         // Extract the order ID from the request body
-        const orderId = reqbody.id;
+        const orderId = data._id;
         if (!orderId) {
         throw new Error("Order ID is required.");
         }

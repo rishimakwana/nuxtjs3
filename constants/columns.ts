@@ -31,6 +31,10 @@ export const ProductColumns = [{
     label: 'Category',
     sortable: false
 },
+{
+    key: 'actions',
+    label: 'Actions',
+}
 
 ]
 
