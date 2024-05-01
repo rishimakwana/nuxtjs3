@@ -20,7 +20,6 @@ function select (row:any) {
 const search = ref('')
 let editOrderModal = ref(false)
 let editOrderData = ref<any>()
-let filtersModal = ref(false)
 
 async function edit(row:any) {
   editOrderData.value = row
@@ -77,17 +76,6 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
         footer: { padding: 'p-4' }
       }"
     >
-  
-      <!-- Filters -->
-      <div class="flex items-center justify-between gap-3 px-4 py-3">
-        <UInput v-model="search" icon="i-heroicons-magnifying-glass-20-solid" placeholder="Search..." />
-  
-        <div class="flex items-center">
-          <UButton class="w-24 ml-2 " color="white" @click="() =>  { filtersModal = true }">
-          <UIcon name="i-heroicons-bars-3-bottom-right"/> Filters
-          </UButton>
-        </div>
-      </div>
   
       <!-- Table -->
       <UTable

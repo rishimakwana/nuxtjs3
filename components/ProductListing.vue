@@ -20,7 +20,6 @@ function select (row:any) {
 const search = ref('')
 let editModal = ref(false)
 let updatedData = ref<any>()
-const filtersModal = ref(false)
 
 // Pagination
 const sort = ref({ column: 'id', direction: 'asc' as const })
@@ -74,15 +73,7 @@ async function deleteProduct(row:any) {
   <div>
     <UCard
       class="w-full" :ui="{ base: '', ring: '', divide: 'divide-y divide-gray-200 dark:divide-gray-700', header: { padding: 'px-4 py-5' }, body: { padding: '', base: 'divide-y divide-gray-200 dark:divide-gray-700' }, footer: { padding: 'p-4' } }">
-  
-      <!-- Filters -->
-      <div class="flex items-center justify-between gap-3 px-4 py-3">
-        <UInput v-model="search" icon="i-heroicons-magnifying-glass-20-solid" placeholder="Search..." />
-        <UButton class="w-24" color="white" @click="() =>  { filtersModal = true }">
-          <UIcon name="i-heroicons-bars-3-bottom-right"/> Filters
-        </UButton>
-      </div>
-  
+
       <!-- Table -->
       <UTable
         v-model="selectedRows"

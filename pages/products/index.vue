@@ -47,7 +47,7 @@ const date = ref(new Date())
         </div>
       </div>
     </div>
-    <PortletBase :data="summary" />
+    <!-- <PortletBase :data="summary" /> -->
     <ProductListing />
     <UNotifications />
   </UContainer>

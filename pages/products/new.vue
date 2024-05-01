@@ -325,9 +325,6 @@ const removeWhosale = (num: number) => {
                       <UInput type="text" size="md" class="text-sm block w-full" variant="none"
                         placeholder="Enter page URL" v-model="payload.url" />
                     </div>
-                    <!--{{ $t("validation.checkoutUrlAlreadyExist") }}
-                          {{ $t("validation.namelength") }} -->
-                    <!-- <span class="text-url">{{ domainText }}</span> -->
                   </div>
 
                   <div class="d-flex flex-column category-status gap-5">
@@ -388,7 +385,7 @@ const removeWhosale = (num: number) => {
                       <InputPrice v-model:value="payload.costPerItem" :label="$t('common.costPerItem')" placeholder="0"
                         :icon="true" :tooltipText="$t('hint.wontSee')" type="CostPerItem" :increaseValue="increaseValue"
                         :decreaseValue="decreaseValue" :iconText="true" />
-                    </div>f
+                    </div>
                     <!-- Wholse sale price -->
                     <div class="flex items-center text-primary dark:text-white col-span-2"
                       v-if="payload.whosale == false">

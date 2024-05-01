@@ -1,17 +1,9 @@
-import orderModel from "~/server/models/orderModel";
-import parseError from "~/server/utils/errorParser";
+import Order from "~/server/models/orderModel";
+import { createEntity } from "~/server/utils/common";
 
 export default defineEventHandler(async (event: any) => {
-  try {
-    // Read the body of the request
-    const reqbody = await readBody(event);
-    const savedUser = await orderModel.add(reqbody);
-    return {
-      statusCode: 200,
-      message: "Order created successfully.",
-      ...savedUser.toJSON(),
-    };
-  } catch (error: any) {
-    return parseError(error);
-  }
+  const reqbody = await readBody(event);
+  //calling the common module for create entity
+  const order = createEntity(Order, reqbody, "");
+  return order;
 });
