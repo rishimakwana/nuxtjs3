@@ -1,5 +1,7 @@
-import userModal from "~/server/models/userModel.js";
-
+/**
+ * @param event The event object representing the incoming request
+ * @returns {Object} An object containing the status code and response body
+ */
 export default defineEventHandler(async (event: any) => {
   try {
     // Read the body of the request

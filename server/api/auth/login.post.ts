@@ -3,6 +3,12 @@ import { userLoginSchema } from "~/server/validations";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
 
+/*
+ * Handles user login requests, validating fields, querying the user model, 
+ * comparing passwords, generating JWT token, and returning response.
+ * @param event The incoming request event object
+ * @returns {Object} Status code, message, token, and user information
+ */
 export default defineEventHandler(async (event: any) => {
   try {
     // Read the body of the request
@@ -11,7 +17,7 @@ export default defineEventHandler(async (event: any) => {
     //validate the fields
     await userLoginSchema.validate(reqBody, { abortEarly: false });
 
-    const result: any = await userModal.findOne({email :reqBody.email});
+    const result: any = await userModal.findOne({ email: reqBody.email });
     if (result && result.password) {
       const bcryptRes = await bcrypt.compare(reqBody.password, result.password);
       if (bcryptRes) {
@@ -25,7 +31,7 @@ export default defineEventHandler(async (event: any) => {
           "config.jwtKey_default",
           { expiresIn: expiresIn }
         );
-        return { statusCode: 200, message : "Successfully logged in." ,token, ...result.toJSON() };
+        return { statusCode: 200, message: "Successfully logged in.", token, ...result.toJSON() };
       } else {
         throw createError({
           statusCode: 400,

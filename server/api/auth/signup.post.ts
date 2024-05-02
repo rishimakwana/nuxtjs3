@@ -2,6 +2,13 @@ import userModal from "~/server/models/userModel.js";
 import bcrypt from "bcrypt";
 import { userSignupSchema } from "~/server/validations";
 
+/**
+ * Handles the registration of a new user.
+ * This function validates the request body, checks for an existing user with the same email,
+ * hashes the password, and saves the new user to the database.
+ * @param event The event object representing the incoming request
+ * @returns {Object} An object containing the status code, message, and response body
+ */
 export default defineEventHandler(async (event: any) => {
   try {
     // Read the body of the request
