@@ -37,14 +37,6 @@ const label = computed(() => {
     }
 })
 
-// const disabledDates = ref([ new Date()
-//     // { 
-//         // repeat: {
-//         //     weekdays: [1],
-//         // },
-//     // },
-// ]);
-
 const colorMode = useColorMode()
 
 const isDark = computed(() => colorMode.value === 'dark')
@@ -139,12 +131,5 @@ const handleCancel = () => {
                 </VDatePicker>
             </template>
         </template>
-      </UPopover>
-    
-    <!-- <client-only>
-    <h2>Calendar</h2>
-    <VCalendar v-model="date" />
-    <h2>Date Picker</h2>
-    <VDatePicker v-model="date" :attributes="attrs" />
-  </client-only> -->
+    </UPopover>
 </template>

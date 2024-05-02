@@ -21,7 +21,7 @@ export const useAuthStore = defineStore('auth', {
     user: null as User | null
   }),
   actions: {
-    async authenticateUser( details: any) {
+    async authenticateUser(details: any) {
       // useFetch from nuxt 3
       const { data, pending } = await useFetch<User>('/api/auth/login', {
         method: 'post',
@@ -44,23 +44,3 @@ export const useAuthStore = defineStore('auth', {
     },
   },
 });
-
-
-// export const useTodosStore = defineStore('todos', () => {
-//   const todos = ref([]);  // ref by defaults are states,
-
-//  // functions get added to actions
-
-//   const fetchTodos = async () => { 
-//     const { data } = await useFetch('https://jsonplaceholder.typicode.com/todos');
-//     if (data.value) {
-//       todos.value = data.value;
-//     }
-//   };
-
-// // we must return what we want to use accross the application
-//   return {
-//     todos,
-//     fetchTodos,
-//   };
-// });

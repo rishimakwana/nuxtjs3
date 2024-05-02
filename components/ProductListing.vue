@@ -143,6 +143,7 @@ async function deleteProduct(row:any) {
         </div>
       </template>
     </UCard>
+    
     <!-- Edit order model -->
     <div v-if="editModal">
         <EditProductModal :data="updatedData" :val="editModal" @closeModal="closeModal"/>

@@ -10,13 +10,14 @@ export default function getConnection(dbIndex: number = 0) {
   const { mongoUrls } = config;
 
   try {
+    //for connection multiple databases if needed
     const connection = mongoose.createConnection(mongoUrls[dbIndex]);
 
     connection.on("connected", () => {
       console.log("Database connected:", dbIndex);
     });
 
-    connection.on("error", (err:any) => {
+    connection.on("error", (err: any) => {
       console.error("Database connection error:", err);
     });
 

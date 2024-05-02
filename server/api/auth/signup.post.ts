@@ -20,8 +20,6 @@ export default defineEventHandler(async (event: any) => {
       password: password,
       monthly_volume: reqBody.monthly_volume,
       is_active: true,
-      // username : body.username,
-      isFormulirUser: true,
     };
 
     // Query the Users model for email existence
@@ -39,7 +37,7 @@ export default defineEventHandler(async (event: any) => {
       });
     }
     const savedUser = await userModal.add(params);
-    return { statusCode: 200, message:"Successfully registered", body: JSON.stringify({ savedUser }) };
+    return { statusCode: 200, message: "Successfully registered", body: JSON.stringify({ savedUser }) };
   } catch (error: any) {
     if (error?.cause) {
       return error;

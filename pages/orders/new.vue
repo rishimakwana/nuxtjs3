@@ -166,9 +166,6 @@ const cancel = () => {
           <UButton class="px-5 py-2 rounded-md ml-2" type="submit">
             Save
           </UButton>
-          <!-- <UButton class="px-5 py-2 rounded-md ml-2" @click="save">
-            Save
-          </UButton> -->
         </UForm>
       </div>
     </section>

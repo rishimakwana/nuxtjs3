@@ -2,11 +2,7 @@
 import categories from '~/constants/categories'
 
 const props = defineProps(['value'])
-
-const catOptions1 = ref([{ text: 'Tanpa Kategori', id: 'Tanpa Kategori_' }])
 const catOptions2 = ref<any>([])
-
-
 const emit = defineEmits();
 
 watch(() => props.value.category, (val) => {

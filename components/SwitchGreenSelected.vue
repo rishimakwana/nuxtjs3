@@ -21,59 +21,6 @@ const onSwitch = (val:string) => {
 <template>
   <div class="flex button-green-flag shipping_buttons gap-4" :class="className">
     <template v-for="(option, i) in options">
-      <!-- <vs-tooltip v-bind:key="i" v-if="truncatedText(option.text, false)">
-        <div
-          class="email_verify_btn email_verify_btn--full-width"
-          :style="
-            (full
-              ? 'width: ' +
-                full +
-                '%; text-align: center; max-width:100%; height: 100%;'
-              : ''
-            )
-          "
-          @click="onSwitch(option.id)"
-          :class="{
-            'active b-simple': value == option.id,
-            'b-white fake-input': value != option.id,
-            'with-image': option.imgSrc,
-            'disabled-option':option.disabled  
-          }"
-        >
-          <div class="d-flex align-items-center">
-            <span v-if="option.imgSrc">
-              <img
-                :src="option.imgSrc"
-                class="courier-img icon"
-                width="34px"
-                height="34px"
-                style="margin-right: 8px; border-radius: 8px; object-fit: contain;"
-              />
-            </span>
-            <span
-              :class="
-                option.id != 'JNE' &&
-                option.id != 'Sicepat' &&
-                option.id != 'Sap'
-                  ? 'option-text'
-                  : ''
-              "
-              class="btn-text fs-13 fw-500"
-              >{{ truncatedText(option.text, true) }}
-             
-              </span >
-          </div>
-          <img
-            v-if="value == option.id"
-            class="active-mark"
-            :src="require('~/assets/img/icon/blue-tick.svg')"
-            id="voicebutton"
-          />
-        </div>
-        <template #tooltip>
-          {{ option.text }}
-        </template>
-      </vs-tooltip> -->
       <div
         class="w-full border py-4 px-5 rounded-md cursor-pointer text-xs border-custom-200 hover:border-primary hover:bg-custom-50 text-center"
         @click="onSwitch(option.id)"

@@ -1,6 +1,8 @@
 import { useAuthStore } from "~/store/auth";
 import { storeToRefs } from "pinia";
 
+
+//Auth middleware for authentication
 export default defineNuxtRouteMiddleware((to, from) => {
   const { authenticated } = storeToRefs(useAuthStore()); // make authenticated state reactive
   const token: any = useCookie('token'); // get token from cookies

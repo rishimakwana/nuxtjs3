@@ -1,75 +1,46 @@
-# Nuxt 3 Minimal Starter
+# Nuxt.js E-commerce Dashboard
 
-Look at the [Nuxt 3 documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+## Overview
 
-## Setup
+An E-commerce website build in Nuxtjs3 (latest vrsion of vue framework) in which implemented user authentication, product and order management, multilanguage with i18n, and efficient state management with Store Pinia, and created reusable components. Follow the best practices and high development standards for a top-notch project.\
 
-Make sure to install the dependencies:
+## Library Used
+
+- [Nuxt.js](https://nuxt.com/) - v3
+- [NuxtUI](https://ui.nuxt.com/)
+- [Pinia](https://pinia.vuejs.org/) - state management
+- [Nuxti18n](https://i18n.nuxtjs.org/) - Internationalization (for making multi-language)
+- [Typescript](https://www.typescriptlang.org/)
+
+## Features & Functionality in the project:
+
+- Nuxt-i18n for multilanguage support
+- Smart handling of website themes (managing the entire website theme from a centralized location)
+- An enterprise-level scalable folder structure designed for code elegance.
+- TypeScript integration with robust type checking to prevent errors.
+- Seamless user authentication for secure transactions.
+- Streamlined product and order management functionalities.
+
+## Getting started
+
+To get started with this project, follow these steps:
+
+1. Clone repository:
 
 ```bash
-# npm
+git clone https://github.com/synsoft-global/NUXT-NODE-ECommerce-App.git
+```
+
+2. Install dependencies:
+
+```bash
 npm install
-
-# pnpm
-pnpm install
-
-# yarn
-yarn install
-
-# bun
-bun install
 ```
 
-## Development Server
-
-Start the development server on `http://localhost:3000`:
+3. Run development server:
 
 ```bash
-# npm
 npm run dev
-
-# pnpm
-pnpm run dev
-
-# yarn
-yarn dev
-
-# bun
-bun run dev
 ```
 
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
-pnpm run build
-
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
-pnpm run preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
-```
-
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.

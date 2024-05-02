@@ -132,7 +132,6 @@ const items = [
 
             <!-- balance section -->
             <div class="balance-box cursor-pointer">
-              <!-- v-if='$store.state.authfack.user && $store.state.authfack.user.role !== "admin"' -->
               <div
                 class="nav-item flex b-nav-dropdown dropdown notification-list topbar-dropdown balance pl-2 price-section"
               >

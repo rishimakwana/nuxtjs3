@@ -6,66 +6,14 @@ const User = model("User", userSchema);
 export default {
   findOne: async (params: any, fields: any = null) => {
     try {
-        return await User.findOne(params, fields);
+      return await User.findOne(params, fields);
     } catch (error) {
-        throw error;
+      throw error;
     }
   },
   get: async (params: any, fields: any = null) => {
     try {
       return await User.find(params, fields).sort({ createdAt: -1 });
-    } catch (error) {
-      throw error;
-    }
-  },
-  get_w_role: async (params: any, fields: any = null) => {
-    try {
-      return await User.find(params, fields)
-        .populate("role_id")
-        .sort({ createdAt: -1 });
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  getPages: async (params: any, fields: any = null) => {
-    try {
-      let size = params.size ? parseInt(params.size) : 10000;
-      let page = params.page ? parseInt(params.page) : 1;
-      let query = params.query ? params.query : params;
-      return await User.find(query, fields)
-        .populate("parentId", "email")
-        .sort(params && params.sort ? params.sort : { createdAt: -1 })
-        .limit(size)
-        .skip(size * (page - 1));
-    } catch (error) {
-      throw error;
-    }
-  },
-  getFollowup: async (params: any) => {
-    try {
-      let _id = params._id;
-      let type = params.type;
-      return await User.find(
-        {
-          _id: _id,
-        },
-        {
-          followUpTemplates: {
-            $elemMatch: {
-              type: { $in: type },
-            },
-          },
-        }
-      );
-    } catch (error) {
-      throw error;
-    }
-  },
-
-  getCount: async (params: any) => {
-    try {
-      return await User.countDocuments(params.query ? params.query : params);
     } catch (error) {
       throw error;
     }

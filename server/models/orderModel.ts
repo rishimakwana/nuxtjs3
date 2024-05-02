@@ -15,9 +15,9 @@ export default {
   },
   findOne: async (params: any, fields: any = null) => {
     try {
-        return await Order.findOne(params, fields);
+      return await Order.findOne(params, fields);
     } catch (error) {
-        throw error;
+      throw error;
     }
   },
 
@@ -36,20 +36,7 @@ export default {
     }
   },
 
-  getPages: async (params: any, fields: any = null) => {
-    try {
-      let size = params.size ? parseInt(params.size) : 10000;
-      let page = params.page ? parseInt(params.page) : 1;
-      let query = params.query ? params.query : params;
-      return await Order.find(query, fields)
-        .populate("domain")
-        .sort(params && params.sort ? params.sort : { createdAt: -1 })
-        .limit(size)
-        .skip(size * (page - 1));
-    } catch (error) {
-      throw error;
-    }
-  },
+
 
   getCount: async (params: any) => {
     try {

@@ -17,14 +17,10 @@ const updateMenu = (data: any) => {
 
 </script>
 <template>
-  <!-- <div class="user-box text-center">
-  </div> -->
   <div class="sidebar-menu">
     <!-- Render menu items -->
     <ul class="list-unstyled menuitem-active" id="side-menu">
       <SidebarItem v-for="item in menus" :item="item" :updateMenu="updateMenu" :sidebarExpanded="props.sidebarExpanded" />
     </ul>
   </div>
-  <!-- <div class="clearfix">
-  </div> -->
 </template>

@@ -35,21 +35,6 @@ export default {
     }
   },
 
-  getPages: async (params: any, fields: any = null) => {
-    try {
-      let size = params.size ? parseInt(params.size) : 10000;
-      let page = params.page ? parseInt(params.page) : 1;
-      let query = params.query ? params.query : params;
-      return await Product.find(query, fields)
-        .populate("domain")
-        .sort(params && params.sort ? params.sort : { createdAt: -1 })
-        .limit(size)
-        .skip(size * (page - 1));
-    } catch (error) {
-      throw error;
-    }
-  },
-
   getCount: async (params: any) => {
     try {
       return await Product.countDocuments(params.query ? params.query : params);

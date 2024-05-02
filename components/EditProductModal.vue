@@ -23,7 +23,7 @@ const updateOrder = async() => {
         console.log(error,"error");
     }};
 watch(isOpen, (val) => {
-  emit('closeModal', val);
+    emit('closeModal', val);
 }, { immediate: true });
 
 </script>

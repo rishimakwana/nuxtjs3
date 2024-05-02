@@ -37,7 +37,7 @@ async function deleteOrder(row:any) {
             id: row._id
           }
         })
-       refreshNuxtData('orders')
+      refreshNuxtData('orders')
     }
   } catch (error) {
     console.log(error,"error");
