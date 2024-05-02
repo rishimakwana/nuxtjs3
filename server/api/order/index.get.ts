@@ -1,5 +1,5 @@
-import Order from "../../models/orderModel";
-import { findAllEntity } from "~/server/utils/common";
+import Order from "../../services/orderServices";
+import { findAllEntity } from "~/server/services/commonServices";
 
 /*
  * This function uses a common utility function to find all entities of the Order model 

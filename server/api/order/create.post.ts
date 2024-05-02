@@ -1,5 +1,5 @@
-import Order from "~/server/models/orderModel";
-import { createEntity } from "~/server/utils/common";
+import Order from "~/server/services/orderServices";
+import { createEntity } from "~/server/services/commonServices";
 
 /*
  * Handles the creation of an order entity.

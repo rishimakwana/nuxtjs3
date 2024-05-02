@@ -1,5 +1,5 @@
-import Order from "~/server/models/orderModel";
-import { deleteEntity } from "~/server/utils/common";
+import Order from "~/server/services/orderServices";
+import { deleteEntity } from "~/server/services/commonServices";
 
 /*
  * Handles the delete of an order entity.

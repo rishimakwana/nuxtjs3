@@ -1,7 +1,4 @@
-import { Schema, model } from "mongoose";
-import userSchema from "./schema/usersSchema";
-
-const User = model("User", userSchema);
+import User from "../schema/usersSchema";
 
 export default {
   findOne: async (params: any, fields: any = null) => {

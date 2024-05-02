@@ -1,5 +1,5 @@
-import productModel from "~/server/models/productModel";
-import { deleteEntity } from "~/server/utils/common";
+import productModel from "~/server/services/productServices";
+import { deleteEntity } from "~/server/services/commonServices";
 
 /*
  * Deletes a product entity based on the provided ID.

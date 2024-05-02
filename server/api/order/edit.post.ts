@@ -1,5 +1,5 @@
-import Order from "~/server/models/orderModel";
-import { updateEntity } from "~/server/utils/common";
+import Order from "~/server/services/orderServices";
+import { updateEntity } from "~/server/services/commonServices";
 
 /*
  * Handles the updation of an order entity.

@@ -1,4 +1,4 @@
-import parseError from "./errorParser";
+import parseError from "../utils/errorParser";
 
 //common function for creating data
 export const createEntity = async (Modal: any, body: any, condition: any) => {

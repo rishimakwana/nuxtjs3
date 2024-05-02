@@ -1,4 +1,4 @@
-import userModal from "~/server/models/userModel.js";
+import userModal from "~/server/services/userServices.js";
 
 export default defineEventHandler(async (event: any) => {
   try {

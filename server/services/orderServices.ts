@@ -1,9 +1,4 @@
-import orderSchema from "./schema/orderSchema";
-import getConnection from "../utils/dbConnection";
-import order from "./schema/orderSchema";
-
-const connection: any = getConnection();
-const Order = connection.model("Order", orderSchema);
+import Order from "../schema/orderSchema";
 
 export default {
   findById: async (id: string, fields: any = null) => {

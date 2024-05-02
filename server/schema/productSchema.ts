@@ -1,19 +1,19 @@
 import mongoose from 'mongoose';
-const { Schema, model } = mongoose;
+const { Schema } = mongoose;
 
-const product = new Schema({
+const ProductSchema = new Schema({
     user_id: { type: Schema.Types.ObjectId },
     sub_user_id: { type: Schema.Types.ObjectId },
     user: Object,
     name: String,
     formOption: String,
-    url: { type: String},
+    url: { type: String },
     images: Array,
     category: String,
     category2: String,
     category3: String,
     status: String,
-    committed:{ type: Number, default: 0 },
+    committed: { type: Number, default: 0 },
     in: { type: Number, default: 0 },
     price: Number,
     priceCompare: Number,
@@ -40,4 +40,5 @@ const product = new Schema({
     timestamps: true
 })
 
-export default product
+const Product = mongoose.model('Product', ProductSchema);
+export default Product

@@ -1,8 +1,4 @@
-import productSchema from "./schema/productSchema";
-import getConnection from "../utils/dbConnection";
-
-const connection: any = getConnection();
-const Product = connection.model("Product", productSchema);
+import Product from "../schema/productSchema";
 
 export default {
   findById: async (id: string, fields: any = null) => {

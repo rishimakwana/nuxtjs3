@@ -1,4 +1,4 @@
-import userModal from "~/server/models/userModel.js";
+import userModal from "~/server/services/userServices.js";
 import { userLoginSchema } from "~/server/validations";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";

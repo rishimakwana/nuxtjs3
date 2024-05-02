@@ -1,4 +1,4 @@
-import userModal from "~/server/models/userModel.js";
+import userModal from "~/server/services/userServices.js";
 import bcrypt from "bcrypt";
 import { userSignupSchema } from "~/server/validations";
 

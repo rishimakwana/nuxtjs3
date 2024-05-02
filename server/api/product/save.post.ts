@@ -1,5 +1,5 @@
-import productModel from "~/server/models/productModel";
-import { createEntity } from "~/server/utils/common";
+import productModel from "~/server/services/productServices";
+import { createEntity } from "~/server/services/commonServices";
 
 /**
  * Creates a new product entity.

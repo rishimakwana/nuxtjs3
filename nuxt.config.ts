@@ -11,6 +11,7 @@ export default defineNuxtConfig({
     "@vee-validate/nuxt",
     "@samk-dev/nuxt-vcalendar",
     "@nuxtjs/i18n",
+    "@nuxt/eslint"
   ],
   veeValidate: {
     autoImports: true,
@@ -29,14 +30,7 @@ export default defineNuxtConfig({
     propsDestructure: true,
   },
   runtimeConfig: {
-    mongoUrls: [
-      process.env.MONGODB_URI ?? "",
-      process.env.MONGODB_URI1 ?? "",
-      process.env.MONGODB_URI2 ?? "",
-      process.env.MONGODB_URI3 ?? "",
-      process.env.MONGODB_URI4 ?? "",
-      process.env.MONGODB_URI5 ?? "",
-    ],
+    mongoUrl: process.env.MONGODB_URI ?? "",
   },
   nitro: {},
   // Vite configuration
@@ -47,4 +41,7 @@ export default defineNuxtConfig({
       },
     },
   },
+  eslint: {
+    // options here
+  }
 });

@@ -1,5 +1,5 @@
-import productModel from "~/server/models/productModel";
-import { updateEntity } from "~/server/utils/common";
+import productModel from "~/server/services/productServices";
+import { updateEntity } from "~/server/services/commonServices";
 
 /*
  * Updates a product entity with the provided data.

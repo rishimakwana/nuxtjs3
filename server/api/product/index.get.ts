@@ -1,5 +1,5 @@
-import productModel from "~/server/models/productModel";
-import { findAllEntity } from "~/server/utils/common";
+import productModel from "~/server/services/productServices";
+import { findAllEntity } from "~/server/services/commonServices";
 
 /*
  * Retrieves a list of products based on the provided query parameters.

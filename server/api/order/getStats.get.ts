@@ -1,6 +1,6 @@
 import parseError from "~/server/utils/errorParser";
-import Order from "../../models/orderModel";
-import Product from "~/server/models/productModel";
+import Order from "../../services/orderServices";
+import Product from "~/server/services/productServices";
 
 /*
  * This function retrieves the total count of paid and unpaid orders, 
