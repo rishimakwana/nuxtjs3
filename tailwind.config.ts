@@ -19,6 +19,9 @@ export default <Partial<Config>>{
           900: "#020206",
           950: "#000000",
         },
+        dark: {
+          DEFAULT: "#203551",
+        },
         custom: {
           DEFAULT: "#6C7E95",
           50: "#f5f6fc",  // used
