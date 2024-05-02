@@ -181,17 +181,6 @@ const items = [
                         class="arrow"
                       />
                     </span>
-                    <span class="profile-icon ml-1 flex md:hidden">
-                      <img
-                        src="~/assets/img/icon/profile-dropdown.svg"
-                        alt=""
-                      />
-                      <img
-                        src="~/assets/img/icon/ic-arrow-white-bottom-18.svg"
-                        alt=""
-                        class="arrow"
-                      />
-                    </span>
                   </div>
                 </button>
               </UDropdown>

@@ -3,7 +3,7 @@
       <!-- component -->
       <div class="sm:px-6 lg:px-8 py-7 px-5">
         <div class="flex justify-start items-start">
-          <p class="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800 dark:text-white">Dashboard</p>
+          <p class="text-3xl lg:text-4xl font-semibold leading-7 lg:leading-9 text-gray-800 dark:text-white"> {{ $t("menu.dashboard") }}</p>
         </div>
         <div class="custom-grid-container mt-4 gap-4">
           <!-- Loop through the stats and generate card sections -->
