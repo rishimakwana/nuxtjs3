@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // Columns
+import EditProductModal from './EditProductModal.vue';
 import { ProductColumns } from '~/constants/columns';
 const selectedColumns = ref([...ProductColumns]);
 const columnsTable = computed(() => selectedColumns.value);

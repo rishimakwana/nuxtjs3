@@ -11,8 +11,8 @@ import Product from "~/server/services/productServices";
 export default defineEventHandler(async (event: any) => {
   try {
     const [totalPaid, totalUnPaid, totalOrder, totalProducts] = await Promise.all([
-      Order.getCount({ paid: { $eq: true } }),
-      Order.getCount({ paid: { $ne: true } }),
+      Order.getCount({ paymentStatus: { $eq: 'paid' } }),
+      Order.getCount({ paymentStatus: { $eq: 'unpaid' } }),
       Order.getCount({}),
       Product.getCount({})
     ]);

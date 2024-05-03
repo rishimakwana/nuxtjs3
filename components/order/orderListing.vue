@@ -1,5 +1,6 @@
 <script lang="ts" setup>
 // Columns
+import EditOrderModal from './EditOrderModal.vue';
 import { OrderColumns } from '~/constants/columns';
 const selectedColumns = ref([...OrderColumns]);
 const columnsTable = computed(() => selectedColumns.value);
