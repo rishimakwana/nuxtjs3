@@ -15,4 +15,4 @@ export default function parseError (error:any) {
           stack: "",
         });
       }
-  };
+  }

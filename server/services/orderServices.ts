@@ -43,7 +43,7 @@ export default {
 
   add: async (params: any) => {
     try {
-      let newOrder = new Order(params);
+      const newOrder = new Order(params);
       return await newOrder.save();
     } catch (error) {
       throw error;

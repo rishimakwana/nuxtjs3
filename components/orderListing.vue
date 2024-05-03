@@ -18,8 +18,8 @@ function select (row:any) {
 
 // variable with ref
 const search = ref('')
-let editOrderModal = ref(false)
-let editOrderData = ref<any>()
+const editOrderModal = ref(false)
+const editOrderData = ref<any>()
 
 async function edit(row:any) {
   editOrderData.value = row
@@ -76,11 +76,18 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
         footer: { padding: 'p-4' }
       }"
     >
+      <!-- Filters -->
+      <div class="flex items-center justify-between gap-3 px-4 py-3">
+        <UInput
+          v-model="search"
+          icon="i-heroicons-magnifying-glass-20-solid"
+          placeholder="Search..."
+        />
+      </div>
   
       <!-- Table -->
       <UTable
         v-model="selectedRows" 
-        @select="select"
         v-model:sort="sort"
         :rows="orders.data"
         :columns="columnsTable"
@@ -90,23 +97,41 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
         sort-mode="manual"
         class="w-full"
         :ui="{ td: { base: 'max-w-[0] truncate' } }"
+        @select="select"
       >
-      <template #name-data="{ row }">
-        <span :class="[selectedRows.find((item:any) => item._id == row._id) && 'text-primary-500 dark:text-primary-400']">{{ row.name }}</span>
-      </template>
+        <template #name-data="{ row }">
+          <span :class="[selectedRows.find((item:any) => item._id == row._id) && 'text-primary-500 dark:text-primary-400']">{{ row.name }}</span>
+        </template>
   
         <template #actions-data="{ row }">
-  
           <UPopover mode="hover">
-            <UButton color="gray" variant="ghost" trailing-icon="i-heroicons-ellipsis-horizontal-20-solid" />
+            <UButton
+              color="gray"
+              variant="ghost"
+              trailing-icon="i-heroicons-ellipsis-horizontal-20-solid"
+            />
   
             <template #panel>
               <div class="d-flex flex-column">
                 <div>
-                  <UButton @click="edit(row)"  color="gray" variant="ghost" icon="i-heroicons-pencil-square-20-solid">Edit</UButton>
+                  <UButton
+                    color="gray"
+                    variant="ghost"
+                    icon="i-heroicons-pencil-square-20-solid"
+                    @click="edit(row)"
+                  >
+                    Edit
+                  </UButton>
                 </div>
                 <div>
-                  <UButton @click="deleteOrder(row)"  color="gray" variant="ghost" icon="i-heroicons-trash-20-solid">Delete</UButton>
+                  <UButton
+                    color="gray"
+                    variant="ghost"
+                    icon="i-heroicons-trash-20-solid"
+                    @click="deleteOrder(row)"
+                  >
+                    Delete
+                  </UButton>
                 </div>
               </div>
             </template>
@@ -117,16 +142,16 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
       <!-- Number of rows & Pagination -->
       <template #footer>
         <div class="flex flex-wrap justify-between items-center">
-              <div class="flex items-center gap-1.5">
-                <span class="text-sm leading-5">Rows per page:</span>
+          <div class="flex items-center gap-1.5">
+            <span class="text-sm leading-5">Rows per page:</span>
         
-                <USelect
-                  v-model="pageCount"
-                  :options="[3, 5, 10, 20, 30, 40]"
-                  class="me-2 w-20"
-                  size="xs"
-                />
-              </div>
+            <USelect
+              v-model="pageCount"
+              :options="[3, 5, 10, 20, 30, 40]"
+              class="me-2 w-20"
+              size="xs"
+            />
+          </div>
   
           <UPagination
             v-model="page"
@@ -147,7 +172,11 @@ const { data: orders, pending } = await useLazyAsyncData('orders', () => ($fetch
     </UCard>
     <!-- Edit order model -->
     <div v-if="editOrderModal">
-      <EditOrderModal :data="editOrderData" :val="editOrderModal" @closeModal="closeModal"/>
+      <EditOrderModal
+        :data="editOrderData"
+        :val="editOrderModal"
+        @close-modal="closeModal"
+      />
     </div>
   </div>
 </template>

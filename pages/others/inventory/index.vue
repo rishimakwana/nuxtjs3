@@ -9,5 +9,7 @@ useHead({
 </script>
 
 <template>
-  Inventory
+  <div>
+    Inventory
+  </div>
 </template>

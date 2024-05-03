@@ -22,7 +22,7 @@ export default defineEventHandler(async (event: any) => {
       const bcryptRes = await bcrypt.compare(reqBody.password, result.password);
       if (bcryptRes) {
         const expiresIn = reqBody.rememberUser ? "1y" : "2d";
-        let token = jwt.sign(
+        const token = jwt.sign(
           {
             userId: result._id,
             name: result.name,

@@ -41,7 +41,7 @@ const selected = ref({})
 
 watch(selected, (val) => {
   if(val){
-    let data = JSON.parse(JSON.stringify(val))
+    const data = JSON.parse(JSON.stringify(val))
     payload.value.productname = data.name
     payload.value.price = data.price
     payload.value.productId = data._id
@@ -99,11 +99,18 @@ const cancel = () => {
   <div class="w-full max-w-screen-2xl m-auto">
     <header class="fixed top-0 w-full max-w-screen-2xl m-auto z-10">
       <div class="h-16 bg-blue-600 flex justify-between items-center">
-        <img src="~/assets/images/e-commerce-high-resolution-logo.png" :class="`h-[35px] w-[150px] ml-3 cursor-pointer`" alt="Logo"
-          @click="handelQuit" />
-        <div>
-        </div>
-        <UIcon name="i-heroicons-x-mark-solid" class="mr-3 bg-white cursor-pointer" @click="handelQuit" />
+        <img
+          src="~/assets/images/e-commerce-high-resolution-logo.png"
+          :class="`h-[35px] w-[150px] ml-3 cursor-pointer`"
+          alt="Logo"
+          @click="handelQuit"
+        >
+        <div />
+        <UIcon
+          name="i-heroicons-x-mark-solid"
+          class="mr-3 bg-white cursor-pointer"
+          @click="handelQuit"
+        />
       </div>
     </header>
     <section class="relative w-full max-w-screen-2xl m-auto flex bg-blue-50">
@@ -122,8 +129,8 @@ const cancel = () => {
           class="space-y-4"
           @submit="onSubmit"
         >
-        <!-- Products Dropdown -->
-        <UFormGroup label="Select Product">
+          <!-- Products Dropdown -->
+          <UFormGroup label="Select Product">
             <USelectMenu
               v-model="selected"
               :loading="loading"
@@ -135,35 +142,75 @@ const cancel = () => {
             />
           </UFormGroup>
 
-          <UFormGroup label="Price" name="price">
-            <UInput disabled v-model="payload.price" type="number" />
+          <UFormGroup
+            label="Price"
+            name="price"
+          >
+            <UInput
+              v-model="payload.price"
+              disabled
+              type="number"
+            />
           </UFormGroup>
 
-          <UFormGroup label="Name" name="name">
+          <UFormGroup
+            label="Name"
+            name="name"
+          >
             <UInput v-model="payload.name" />
           </UFormGroup>
 
-          <UFormGroup label="Address" name="address">
-            <UInput v-model="payload.address" type="text" />
+          <UFormGroup
+            label="Address"
+            name="address"
+          >
+            <UInput
+              v-model="payload.address"
+              type="text"
+            />
           </UFormGroup>
 
-          <UFormGroup label="Quantity" name="quantity">
-            <UInput v-model="payload.quantity" type="number" />
+          <UFormGroup
+            label="Quantity"
+            name="quantity"
+          >
+            <UInput
+              v-model="payload.quantity"
+              type="number"
+            />
           </UFormGroup>
 
-          <UFormGroup label="Shipping Method" name="shippingMethod">
-            <UInput v-model="payload.shippingMethod" type="text" />
+          <UFormGroup
+            label="Shipping Method"
+            name="shippingMethod"
+          >
+            <UInput
+              v-model="payload.shippingMethod"
+              type="text"
+            />
           </UFormGroup>
 
-          <UFormGroup label="Notes" name="notes">
-            <UInput v-model="payload.notes" type="text" />
+          <UFormGroup
+            label="Notes"
+            name="notes"
+          >
+            <UInput
+              v-model="payload.notes"
+              type="text"
+            />
           </UFormGroup>
           
           <!-- save and cancel button -->
-          <UButton class="px-5 py-2 rounded-md" @click="cancel">
+          <UButton
+            class="px-5 py-2 rounded-md"
+            @click="cancel"
+          >
             Cancel
           </UButton>
-          <UButton class="px-5 py-2 rounded-md ml-2" type="submit">
+          <UButton
+            class="px-5 py-2 rounded-md ml-2"
+            type="submit"
+          >
             Save
           </UButton>
         </UForm>
@@ -172,12 +219,19 @@ const cancel = () => {
     <UModal v-model="isOpen">
       <UCard :ui="{ ring: '', divide: 'divide-y divide-gray-100 dark:divide-gray-800 text-center' }">
         <h3 class="text-md font-bold leading-7 text-gray-900 dark:text-white sm:truncate sm:text-3xl sm:tracking-tight">
-          {{ $t('common.leave') }}</h3>
+          {{ $t('common.leave') }}
+        </h3>
         <div class="w-full flex gap-6 justify-center px-4 pb-3 pt-5">
-          <UButton class="px-5 py-2 rounded-md" @click="handelAbort">
+          <UButton
+            class="px-5 py-2 rounded-md"
+            @click="handelAbort"
+          >
             Cancel
           </UButton>
-          <UButton class="px-5 py-2 rounded-md" @click="handelConfirm">
+          <UButton
+            class="px-5 py-2 rounded-md"
+            @click="handelConfirm"
+          >
             Yes
           </UButton>
         </div>

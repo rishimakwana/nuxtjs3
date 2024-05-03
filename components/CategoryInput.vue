@@ -6,8 +6,8 @@ const catOptions2 = ref<any>([])
 const emit = defineEmits();
 
 watch(() => props.value.category, (val) => {
-    let findMainCat = categories.find(one => one.text == val)
-    let payload = {...props.value}
+    const findMainCat = categories.find(one => one.text == val)
+    const payload = {...props.value}
     payload.category2 = "";
     if(findMainCat) catOptions2.value = findMainCat.sub
     emit('update:value', payload);
@@ -16,28 +16,33 @@ watch(() => props.value.category, (val) => {
 </script>
 
 <template>
-    <div class="mb-5">
-        <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
-            {{ $t("common.category") }}
-        </label>
-        <div class="flex gap-3">
-            <USelectMenu 
-            class="w-full"
-            size="md"
-            v-model="props.value.category" 
-            :options="categories" 
-            placeholder="Select category" 
-            value-attribute="text"
-            option-attribute="text" />
-            <USelectMenu 
-            class="w-full"
-            size="md"
-            v-if="catOptions2.length"
-            v-model="props.value.category2" 
-            :options="catOptions2" 
-            placeholder="Select category" 
-            value-attribute="text"
-            option-attribute="text" />
-        </div>
+  <div class="mb-5">
+    <label
+      for="name"
+      class="block mb-2 text-sm font-medium text-gray-900 dark:text-white"
+    >
+      {{ $t("common.category") }}
+    </label>
+    <div class="flex gap-3">
+      <USelectMenu 
+        v-model="props.value.category"
+        class="w-full"
+        size="md" 
+        :options="categories" 
+        placeholder="Select category" 
+        value-attribute="text"
+        option-attribute="text"
+      />
+      <USelectMenu 
+        v-if="catOptions2.length"
+        v-model="props.value.category2"
+        class="w-full"
+        size="md" 
+        :options="catOptions2" 
+        placeholder="Select category" 
+        value-attribute="text"
+        option-attribute="text"
+      />
     </div>
+  </div>
 </template>

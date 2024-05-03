@@ -2,43 +2,22 @@ import User from "../schema/usersSchema";
 
 export default {
   findOne: async (params: any, fields: any = null) => {
-    try {
-      return await User.findOne(params, fields);
-    } catch (error) {
-      throw error;
-    }
+    return await User.findOne(params, fields);
   },
   get: async (params: any, fields: any = null) => {
-    try {
-      return await User.find(params, fields).sort({ createdAt: -1 });
-    } catch (error) {
-      throw error;
-    }
+    return await User.find(params, fields).sort({ createdAt: -1 });
   },
 
   add: async (params: any) => {
-    try {
-      let newUser = new User(params);
+    const newUser = new User(params);
       return await newUser.save();
-    } catch (error) {
-      throw error;
-    }
   },
 
   update: async (params: any) => {
-    try {
-      return await User.updateOne(params.selector, { $set: params.data });
-    } catch (error) {
-      throw error;
-    }
+    return await User.updateOne(params.selector, { $set: params.data });
   },
 
   delete: async (id: any) => {
-    try {
-      const deletedUser = await User.findByIdAndDelete(id);
-      return deletedUser;
-    } catch (error) {
-      throw error;
-    }
+    return await User.findByIdAndDelete(id);
   },
 };

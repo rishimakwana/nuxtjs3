@@ -5,5 +5,7 @@ const route = useRoute()
 </script>
 
 <template>
-  reset password
+  <div>
+    reset password
+  </div>
 </template>

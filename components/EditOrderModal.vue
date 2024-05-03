@@ -28,12 +28,21 @@ watch(isOpen, (val) => {
 
 </script>
 <template>
-  <UModal v-model="isOpen" prevent-close>
+  <UModal
+    v-model="isOpen"
+    prevent-close
+  >
     <div class="flex items-center justify-between px-4 pt-2">
       <h3 class="text-base font-semibold leading-6 text-gray-900 dark:text-white">
         Edit Order
       </h3>
-      <UButton color="gray" variant="ghost" icon="i-heroicons-x-mark-20-solid" class="-my-1" @click="isOpen = false" />
+      <UButton
+        color="gray"
+        variant="ghost"
+        icon="i-heroicons-x-mark-20-solid"
+        class="-my-1"
+        @click="isOpen = false"
+      />
     </div>
     <UCard
       :ui="{
@@ -43,43 +52,101 @@ watch(isOpen, (val) => {
     >
       <!-- Products Dropdown -->
       <UFormGroup label="Selected Product">
-        <UInput disabled v-model="payload.productname" type="text" />
+        <UInput
+          v-model="payload.productname"
+          disabled
+          type="text"
+        />
       </UFormGroup>
 
-      <UFormGroup label="Price" name="price">
-        <UInput disabled v-model="payload.price" type="number" />
+      <UFormGroup
+        label="Price"
+        name="price"
+      >
+        <UInput
+          v-model="payload.price"
+          disabled
+          type="number"
+        />
       </UFormGroup>
 
-      <UFormGroup label="Name" name="name">
+      <UFormGroup
+        label="Name"
+        name="name"
+      >
         <UInput v-model="payload.name" />
       </UFormGroup>
 
-      <UFormGroup label="Address" name="address">
-        <UInput v-model="payload.address" type="text" />
+      <UFormGroup
+        label="Address"
+        name="address"
+      >
+        <UInput
+          v-model="payload.address"
+          type="text"
+        />
       </UFormGroup>
 
-      <UFormGroup label="Quantity" name="quantity">
-        <UInput v-model="payload.quantity" type="number" />
+      <UFormGroup
+        label="Quantity"
+        name="quantity"
+      >
+        <UInput
+          v-model="payload.quantity"
+          type="number"
+        />
       </UFormGroup>
 
-      <UFormGroup label="Shipping Method" name="shippingMethod">
-        <UInput v-model="payload.shippingMethod" type="text" />
+      <UFormGroup
+        label="Shipping Method"
+        name="shippingMethod"
+      >
+        <UInput
+          v-model="payload.shippingMethod"
+          type="text"
+        />
       </UFormGroup>
 
-      <UFormGroup label="Notes" name="notes">
-        <UInput v-model="payload.notes" type="text" />
+      <UFormGroup
+        label="Notes"
+        name="notes"
+      >
+        <UInput
+          v-model="payload.notes"
+          type="text"
+        />
       </UFormGroup>
-      <UFormGroup label="Payment Status" name="paymentStatus">
-        <UInput v-model="payload.paymentStatus" type="text" />
+      <UFormGroup
+        label="Payment Status"
+        name="paymentStatus"
+      >
+        <UInput
+          v-model="payload.paymentStatus"
+          type="text"
+        />
       </UFormGroup>
-      <UFormGroup label="Tracking Number" name="trackingNumber">
-        <UInput v-model="payload.trackingNumber" type="text" />
+      <UFormGroup
+        label="Tracking Number"
+        name="trackingNumber"
+      >
+        <UInput
+          v-model="payload.trackingNumber"
+          type="text"
+        />
       </UFormGroup>
 
       <!-- save and cancel button -->
       <div class="mt-2">
-        <UButton class="px-5 py-2 rounded-md" @click="isOpen = false"> Cancel </UButton>
-        <UButton class="px-5 py-2 rounded-md ml-2" @click="updateOrder">
+        <UButton
+          class="px-5 py-2 rounded-md"
+          @click="isOpen = false"
+        >
+          Cancel
+        </UButton>
+        <UButton
+          class="px-5 py-2 rounded-md ml-2"
+          @click="updateOrder"
+        >
           Update
         </UButton>
       </div>

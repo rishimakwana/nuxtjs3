@@ -8,5 +8,7 @@ useHead({
 
 </script>
 <template>
-  balance settings
+  <div>
+    balance settings
+  </div>
 </template>

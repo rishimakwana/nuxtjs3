@@ -19,17 +19,23 @@ const onSwitch = (val:string) => {
 </script>
 
 <template>
-  <div class="flex button-green-flag shipping_buttons gap-4" :class="className">
-    <template v-for="(option, i) in options">
+  <div
+    class="flex button-green-flag shipping_buttons gap-4"
+    :class="className"
+  >
+    <template
+      v-for="(option, i) in options"
+      :key="i"
+    >
       <div
         class="w-full border py-4 px-5 rounded-md cursor-pointer text-xs border-custom-200 hover:border-primary hover:bg-custom-50 text-center"
-        @click="onSwitch(option.id)"
         :class="{
           'border-primary bg-custom-50': value == option.id,
           'bg-white border-gray-300 fake-input': value != option.id,
           'with-image': option.imgSrc,
           'disabled-option':option.disabled  
         }"
+        @click="onSwitch(option.id)"
       >
         <div class="d-flex align-items-center">
           <span v-if="option.imgSrc">
@@ -39,7 +45,7 @@ const onSwitch = (val:string) => {
               width="34px"
               height="34px"
               style="margin-right: 8px; border-radius: 8px; object-fit: contain;"
-            />
+            >
           </span>
           <span
             :class="
@@ -48,24 +54,22 @@ const onSwitch = (val:string) => {
                 : ''
             "
             class="btn-text fs-13 fw-500"
-            >{{ option.text }}</span
-          >
+          >{{ option.text }}</span>
         </div>
         <template v-if="value == option.id">
           <img
             v-if="markVariant === 'green'"
+            id="voicebutton"
             class="active-mark active-mark--green"
             src="~/assets/img/icon/Green-tick.svg"
-            id="voicebutton"
-          />
+          >
           <img
             v-else
+            id="voicebutton"
             class="active-mark "
             src="~/assets/img/icon/blue-tick.svg"
-            id="voicebutton"
-          />
+          >
         </template>
-        
       </div>
     </template>
   </div>
@@ -73,7 +77,7 @@ const onSwitch = (val:string) => {
 
 
 
-<style >
+<style>
 .variant-selected-btn {
   .disabled-option{
     background-color:#F6F8FC;

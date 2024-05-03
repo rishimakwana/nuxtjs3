@@ -97,7 +97,7 @@ export const findAllEntity = async (Modal: any, query: any) => {
     }
 
     // Constructing the options for pagination and sorting
-    let options: any = {
+    const options: any = {
       page: page || 1,
       limit: limit || 10,
       sort: {}, //[sort?.column]: sort?.direction === 'asc' ? 1 : -1

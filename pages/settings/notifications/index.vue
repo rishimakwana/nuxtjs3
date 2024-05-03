@@ -8,5 +8,7 @@ useHead({
 </script>
 
 <template>
-  Account Notifications
+  <div>
+    Account Notifications
+  </div>
 </template>

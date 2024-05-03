@@ -9,5 +9,7 @@ useHead({
 </script>
 
 <template>
-  Team Members
+  <div>
+    {{ $t("menu.teamMembers") }}
+  </div>
 </template>

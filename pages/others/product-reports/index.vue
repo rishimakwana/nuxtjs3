@@ -8,5 +8,7 @@ useHead({
 </script>
 
 <template>
-  Product Reports
+  <div>
+    Product Reports
+  </div>
 </template>

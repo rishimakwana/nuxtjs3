@@ -55,36 +55,55 @@ const items = [
         class="flex flex-wrap items-center justify-between py-4"
       >
         <div class="flex">
-          <NuxtLink to="/" class="flex items-center ml-[10px]">
+          <NuxtLink
+            to="/"
+            class="flex items-center ml-[10px]"
+          >
             <img
               src="~/assets/images/e-commerce-favicon-color.png"
               :class="`${
                 props.sidebarExpanded ? 'md:hidden' : ''
               } h-[20px] block`"
               alt="Logo"
-            />
+            >
             <img
               src="~/assets/images/e-commerce-high-resolution-logo.png"
               :class="`h-[35px] w-[150px] hidden ${
                 props.sidebarExpanded ? 'md:block' : ''
               }`"
               alt="Logo"
-            />
+            >
           </NuxtLink>
-          <UButton class="ml-3 sm:ml-10" @click="toggleSidebar()">
+          <UButton
+            class="ml-3 sm:ml-10"
+            @click="toggleSidebar()"
+          >
             <!-- v-click-outside="vcoConfig"> -->
-            <img class="" src="~/assets/img/icon/menu_icon.svg" />
+            <img
+              class=""
+              src="~/assets/img/icon/menu_icon.svg"
+            >
           </UButton>
         </div>
-        <div class="block w-auto" id="navbar-default">
+        <div
+          id="navbar-default"
+          class="block w-auto"
+        >
           <ul
             class="font-medium flex p-0 flex-row items-center space-x-3 md:space-x-6 rtl:space-x-reverse mt-0 border-0"
           >
             <!-- Notification section -->
             <li>
               <UPopover>
-                <UChip text="24" size="2xl" color="red">
-                  <img src="~/assets/images/notifi.svg" alt="icon noti" />
+                <UChip
+                  text="24"
+                  size="2xl"
+                  color="red"
+                >
+                  <img
+                    src="~/assets/images/notifi.svg"
+                    alt="icon noti"
+                  >
                 </UChip>
                 <template #panel>
                   <div class="max-w-sm">
@@ -93,12 +112,10 @@ const items = [
                     >
                       <span
                         class="font-[500] text-sm text-custom-800 dark:text-white tracking-tight"
-                        >Notification</span
-                      >
+                      >Notification</span>
                       <span
                         class="font-[500] text-xs text-primary dark:text-[#8397f0] leading-5 tracking-tight cursor-pointer"
-                        >Mark all as read</span
-                      >
+                      >Mark all as read</span>
                     </div>
                     <ul class="max-h-96 overflow-y-scroll">
                       <li href="#">
@@ -108,7 +125,7 @@ const items = [
                           <img
                             src="~/assets/img/icon/notif-new-order.svg"
                             alt=""
-                          />
+                          >
                           <div class="ml-4">
                             <h4
                               class="font-[600] text-sm tracking-tight color-custom-800 mb-2"
@@ -143,7 +160,7 @@ const items = [
                       src="~/assets/img/icon/ic-balance-navbar.svg"
                       alt="icon balance"
                       class="mr-1"
-                    />
+                    >
                     <span> IDR 0 </span>
                   </div>
                 </NuxtLink>
@@ -153,7 +170,7 @@ const items = [
                     class="icon-info"
                     src="~/assets/img/icon/ic-information-black.svg"
                     alt=""
-                  />
+                  >
                   <template #panel>
                     <span class="max-w-sm p-5 block"> Balance </span>
                   </template>
@@ -172,14 +189,14 @@ const items = [
                       <img
                         src="~/assets/img/icon/ic-profile-navbar.svg"
                         alt="icon profile"
-                      />
+                      >
                       <span class="mx-1 hidden md:block">User</span>
                       <!-- {{ $store.state.authfack.user ? $store.state.authfack.user.name : "" }} -->
                       <img
                         src="~/assets/img/icon/ic-arrow-white-bottom-18.svg"
                         alt=""
                         class="arrow"
-                      />
+                      >
                     </span>
                   </div>
                 </button>
@@ -197,7 +214,10 @@ const items = [
             </li>
 
             <!-- Language change -->
-            <USelect v-model="locale" :options="languages" />
+            <USelect
+              v-model="locale"
+              :options="languages"
+            />
           </ul>
         </div>
       </UContainer>

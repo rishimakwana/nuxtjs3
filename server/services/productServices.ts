@@ -42,7 +42,7 @@ export default {
 
   add: async (params: any) => {
     try {
-      let newProduct = new Product(params);
+      const newProduct = new Product(params);
       return await newProduct.save();
     } catch (error) {
       throw error;

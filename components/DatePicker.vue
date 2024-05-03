@@ -77,59 +77,82 @@ const handleCancel = () => {
 </script>
 
 <template>
-    <UPopover :popper="{ placement: 'bottom-start' }" :open=open>
-        <span @click="handleOpenCalender" 
-        class="text-[#6c757d] bg-white dark:bg-[#353a53] dark:text-[#94a0ad] py-1 px-2 items-center flex gap-1">
-            <UIcon name="i-heroicons-calendar-days-20-solid"/>
-            {{label}}
-            <UIcon name="i-heroicons-chevron-down-solid"/>
-        </span>
+  <UPopover
+    :popper="{ placement: 'bottom-start' }"
+    :open="open"
+  >
+    <span
+      class="text-[#6c757d] bg-white dark:bg-[#353a53] dark:text-[#94a0ad] py-1 px-2 items-center flex gap-1" 
+      @click="handleOpenCalender"
+    >
+      <UIcon name="i-heroicons-calendar-days-20-solid" />
+      {{ label }}
+      <UIcon name="i-heroicons-chevron-down-solid" />
+    </span>
 
-        <template #panel="{ close }">
-            <template v-if="isRange">
-                <VDatePicker 
-                :disabled-dates="disabledDates ? disabledDates : []" 
-                v-model.range="localRange" 
-                :columns="columns"
-                transparent 
-                show-adjacent-months 
-                borderless 
-                :attributes="attrs" 
-                :is-dark="isDark" 
-                title-position="left"
-                :first-day-of-week="1"
-                >
-                    <template #footer>
-                        <div class="w-full flex gap-6 justify-end px-4 pb-3">
-                            <UButton class="px-5 py-2 rounded-md" @click="handleCancel">
-                                Cancel
-                            </UButton>
-                            <UButton class="px-5 py-2 rounded-md" @click="handleApply">
-                                Apply
-                            </UButton>
-                        </div>
-                    </template>
-                </VDatePicker>
-            </template>
-            <template v-else>
-                <VDatePicker 
-                :disabled-dates="disabledDates ? disabledDates : []" 
-                v-model="localDate"
-                :columns="columns"
-                transparent show-adjacent-months borderless :attributes="attrs" :is-dark="isDark" title-position="left"
-                :first-day-of-week="1">
-                    <template #footer>
-                        <div class="w-full flex gap-6 justify-end px-4 pb-3">
-                            <UButton class="px-5 py-2 rounded-md" @click="handleCancel">
-                                Cancel
-                            </UButton>
-                            <UButton class="px-5 py-2 rounded-md" @click="handleApply">
-                                Apply
-                            </UButton>
-                        </div>
-                    </template>
-                </VDatePicker>
-            </template>
-        </template>
-    </UPopover>
+    <template #panel="{ close }">
+      <template v-if="isRange">
+        <VDatePicker 
+          v-model.range="localRange" 
+          :disabled-dates="disabledDates ? disabledDates : []" 
+          :columns="columns"
+          transparent 
+          show-adjacent-months 
+          borderless 
+          :attributes="attrs" 
+          :is-dark="isDark" 
+          title-position="left"
+          :first-day-of-week="1"
+        >
+          <template #footer>
+            <div class="w-full flex gap-6 justify-end px-4 pb-3">
+              <UButton
+                class="px-5 py-2 rounded-md"
+                @click="handleCancel"
+              >
+                Cancel
+              </UButton>
+              <UButton
+                class="px-5 py-2 rounded-md"
+                @click="handleApply"
+              >
+                Apply
+              </UButton>
+            </div>
+          </template>
+        </VDatePicker>
+      </template>
+      <template v-else>
+        <VDatePicker 
+          v-model="localDate" 
+          :disabled-dates="disabledDates ? disabledDates : []"
+          :columns="columns"
+          transparent
+          show-adjacent-months
+          borderless
+          :attributes="attrs"
+          :is-dark="isDark"
+          title-position="left"
+          :first-day-of-week="1"
+        >
+          <template #footer>
+            <div class="w-full flex gap-6 justify-end px-4 pb-3">
+              <UButton
+                class="px-5 py-2 rounded-md"
+                @click="handleCancel"
+              >
+                Cancel
+              </UButton>
+              <UButton
+                class="px-5 py-2 rounded-md"
+                @click="handleApply"
+              >
+                Apply
+              </UButton>
+            </div>
+          </template>
+        </VDatePicker>
+      </template>
+    </template>
+  </UPopover>
 </template>

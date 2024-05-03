@@ -8,5 +8,7 @@ useHead({
 </script>
 
 <template>
-  Account Settings
+  <div>
+    Account Settings
+  </div>
 </template>

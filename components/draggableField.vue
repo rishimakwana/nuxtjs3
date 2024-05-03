@@ -39,7 +39,7 @@ const dragleave = (e: any) => {
 }
 
 const generateURL = (file: any) => {
-    let fileSrc = URL.createObjectURL(file);
+    const fileSrc = URL.createObjectURL(file);
     setTimeout(() => {
         URL.revokeObjectURL(fileSrc);
     }, 1000);
@@ -67,40 +67,73 @@ const isFileAlreadyAdded = (file: File) => {
 </script>
 
 <template>
-    <div class="main">
-        <div :class="`dropzone-container bg-blue-50 ${isDragging ? 'border-green-400' : 'border-gray-300'}`"
-            @dragover="dragover" @dragleave="dragleave" @drop="drop">
-            <input type="file" :multiple="props.maxAllowedFiles > 1 ? true : false" name="file" id="fileInput" class="hidden-input" @change="onChange" ref="file"
-                accept=".pdf,.jpg,.jpeg,.png" />
-            <label v-if="localFiles?.length === 0" for="fileInput" class="file-label m-auto">
-                <div v-if="isDragging">Release to drop.</div>
-                <div v-else>
-                    <UIcon name="i-heroicons-paper-clip" />Upload Images
-                </div>
-            </label>
-            <div v-else class="contents">
-                <div v-for="(img, index) in localFiles" class="border-gray-300 w-[118px] max-w-full image-container">
-                    <div class="relative pb-[100%] overflow-hidden w-full h-full">
-                        <div :style="`background-image: url(${generateURL(img)})`" class="preview-img">
-
-                        </div>
-                        <img @click="() => removeImages(index)" class="close-btn" src="~/assets/img/icon/close.svg"
-                            alt="cross icon" />
-                    </div>
-                </div>
-                <div v-if="localFiles?.length < props.maxAllowedFiles"
-                    class="border-gray-300 flex justify-center items-center image-container max-w-full">
-                    <label for="fileInput" class="file-label">
-                        <UIcon name="i-heroicons-paper-clip" />
-                        <div class="text-sm">Upload Images</div>
-                    </label>
-                </div>
-            </div>
+  <div class="main">
+    <div
+      :class="`dropzone-container bg-blue-50 ${isDragging ? 'border-green-400' : 'border-gray-300'}`"
+      @dragover="dragover"
+      @dragleave="dragleave"
+      @drop="drop"
+    >
+      <input
+        id="fileInput"
+        ref="file"
+        type="file"
+        :multiple="props.maxAllowedFiles > 1 ? true : false"
+        name="file"
+        class="hidden-input"
+        accept=".pdf,.jpg,.jpeg,.png"
+        @change="onChange"
+      >
+      <label
+        v-if="localFiles?.length === 0"
+        for="fileInput"
+        class="file-label m-auto"
+      >
+        <div v-if="isDragging">Release to drop.</div>
+        <div v-else>
+          <UIcon name="i-heroicons-paper-clip" />Upload Images
         </div>
+      </label>
+      <div
+        v-else
+        class="contents"
+      >
+        <div
+          v-for="(img, index) in localFiles"
+          :key="index"
+          class="border-gray-300 w-[118px] max-w-full image-container"
+        >
+          <div class="relative pb-[100%] overflow-hidden w-full h-full">
+            <div
+              :style="`background-image: url(${generateURL(img)})`"
+              class="preview-img"
+            />
+            <img
+              class="close-btn"
+              src="~/assets/img/icon/close.svg"
+              alt="cross icon"
+              @click="() => removeImages(index)"
+            >
+          </div>
+        </div>
+        <div
+          v-if="localFiles?.length < props.maxAllowedFiles"
+          class="border-gray-300 flex justify-center items-center image-container max-w-full"
+        >
+          <label
+            for="fileInput"
+            class="file-label"
+          >
+            <UIcon name="i-heroicons-paper-clip" />
+            <div class="text-sm">Upload Images</div>
+          </label>
+        </div>
+      </div>
     </div>
+  </div>
 </template>
 
-<style scoped >
+<style scoped>
 .main {
     display: flex;
     flex-grow: 1;

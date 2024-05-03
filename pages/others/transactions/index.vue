@@ -9,5 +9,7 @@ useHead({
 </script>
 
 <template>
-  Transactions
+  <div>
+    Transactions
+  </div>
 </template>

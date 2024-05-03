@@ -7,5 +7,5 @@ useHead({
 })
 </script>
 <template>
-    domains page
+  <div>Edit Profile</div>
 </template>
