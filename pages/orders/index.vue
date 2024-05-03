@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import OrderListing from '~/components/orderListing.vue';
+import OrderListing from '~/components/order/orderListing.vue';
 
 definePageMeta({
   middleware: 'auth'

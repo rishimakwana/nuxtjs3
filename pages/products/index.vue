@@ -2,6 +2,8 @@
 definePageMeta({
   middleware: 'auth'
 })
+import DatePicker from '~/components/common/DatePicker.vue';
+
 const { t } = useI18n()
 
 const range = ref({ start: new Date(2020, 0, 6), end: new Date() })
@@ -39,7 +41,7 @@ const date = ref(new Date())
       </h2>
       <div class="flex gap-5 flex-wrap">
         <div>
-          <LazyDatePicker
+          <DatePicker
             v-model:range="range"
             :is-range="true"
           />

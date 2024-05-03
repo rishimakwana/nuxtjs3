@@ -1,4 +1,8 @@
 <script setup lang="ts">
+import InputPrice from '~/components/common/InputPrice.vue';
+import CategoryInput from '~/components/common/CategoryInput.vue';
+import draggableField from '~/components/common/draggableField.vue';
+import SwitchGreenSelected from '~/components/common/SwitchGreenSelected.vue';
 import productInit from '~/constants/productInit';
 import formInit from '~/constants/formInit';
 const { t } = useI18n();

@@ -2,6 +2,10 @@
 useHead({
   title: `Nuxt App`,
 })
+import AppHeader from '~/components/common/AppHeader.vue';
+import AppSidebar from '~/components/common/AppSidebar.vue';
+import AppFooter from '~/components/common/AppFooter.vue';
+
 // Initialize sidebar state
 const sidebarExpanded = ref(true);
 

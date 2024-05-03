@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import VTextInput from '~/components/common/VTextInput.vue';
 import { object, string, ref as yupRef } from "yup";
 import { configure } from "vee-validate";
 import commonMessage from "~/constants/message";
@@ -26,9 +27,8 @@ const handleSubmit = async (values: any, actions: any) => {
             toast.add({ title: 'User signup successfully!' })    
             router.push('/login');
         }
-        // actions.resetForm();
     } catch (error) {
-        // toast.error('Registration failed. Please try again later.');
+        console.log("Error: ",error)
     }
 };
 
@@ -54,11 +54,6 @@ const schema = object({
         .trim()
         .required(commonMessage.required)
         .email(commonMessage.invalidEmail),
-    // .test(
-    //   "email-is-taken",
-    //   "Email is already taken",
-    //   async (value: any) => !(await existingEmail(value))
-    // ),
     password: string().required(commonMessage.required).min(8, commonMessage.passwordMin),
     phone: string()
         .required(commonMessage.required)
@@ -69,8 +64,6 @@ const schema = object({
             }
             return true
         }),
-    // monthlyV: string().required().min(8).label("This"),
-    // referralCode: string().required().label("This"),
     confirmPassword: string()
         .required(commonMessage.required)
         .oneOf([yupRef("password")], commonMessage.passwordConfirm),
@@ -84,7 +77,6 @@ definePageMeta({
 <template>
   <section class="bg-gray-50">
     <div class="flex flex-col items-center justify-center px-6 py-6 mx-auto">
-      <!-- <img class="w-[250px] h-[35px] mb-6 mr-2" src="/formulir-logo.png" alt="logo"> -->
       <div class="w-full bg-white rounded-lg shadow sm:max-w-md xl:p-0 mb-8">
         <div class="space-y-4 md:space-y-6">
           <h1 class="px-6 pt-6 text-3xl font-bold leading-tight tracking-tight text-gray-900">

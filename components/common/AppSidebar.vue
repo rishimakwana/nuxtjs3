@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 import { menuItems } from '~/constants/menu';
 const props = defineProps(['sidebarExpanded']);
+import SidebarItem from '~/components/common/SidebarItem.vue';
 
 const menus = ref(menuItems);
 const updateMenu = (data: any) => {

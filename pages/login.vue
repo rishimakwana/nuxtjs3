@@ -1,4 +1,5 @@
 <script lang="ts" setup>
+import VTextInput from '~/components/common/VTextInput.vue';
 import { object, string, ref as yupRef } from "yup";
 import { configure } from "vee-validate";
 import { storeToRefs } from 'pinia'; // import storeToRefs helper hook from pinia
